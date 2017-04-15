@@ -1,0 +1,45 @@
+# PilotProfile.LastName Property 
+ 
+
+The pilot's last name.
+
+**Namespace:**&nbsp;<a href="N_AirMapDotNet_Entities_PilotAPI">AirMapDotNet.Entities.PilotAPI</a><br />**Assembly:**&nbsp;AirMapDotNet (in AirMapDotNet.dll) Version: 1.0.6313.34627 (1.0)
+
+## Syntax
+
+**C#**<br />
+``` C#
+public virtual string LastName { get; set; }
+```
+
+**VB**<br />
+``` VB
+Public Overridable Property LastName As String
+	Get
+	Set
+```
+
+**C++**<br />
+``` C++
+public:
+virtual property String^ LastName {
+	String^ get ();
+	void set (String^ value);
+}
+```
+
+**F#**<br />
+``` F#
+abstract LastName : string with get, set
+override LastName : string with get, set
+```
+
+
+#### Property Value
+Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>
+
+## See Also
+
+
+#### Reference
+<a href="T_AirMapDotNet_Entities_PilotAPI_PilotProfile">PilotProfile Class</a><br /><a href="N_AirMapDotNet_Entities_PilotAPI">AirMapDotNet.Entities.PilotAPI Namespace</a><br />
