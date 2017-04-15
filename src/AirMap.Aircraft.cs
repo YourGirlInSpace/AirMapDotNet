@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,17 +17,14 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         // Properties with HTTP requests are bad, mmkay?
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public async Task<Manufacturer[]> GetManufacturers()
+        public async Task<IEnumerable<Manufacturer>> GetManufacturers()
         {
             Href<EntityCollection<Manufacturer>> manufacturerLink =
                 new Href<EntityCollection<Manufacturer>>(new Uri("https://api.airmap.com/aircraft/v2/manufacturer"));
 
             EntityCollection<Manufacturer> manuCollection = await GetAsync(manufacturerLink);
-
-            foreach (Manufacturer manu in manuCollection)
-                manu.AirMap = this;
-
-            return manuCollection.ToArray();
+            
+            return manuCollection;
         }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace AirMapDotNet
         /// </code></example>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If both <paramref name="modelFilter"/> and <paramref name="manufacturerID"/> are null or equals <see cref="string.Empty"/>.</exception>
-        public async Task<Model[]> GetModels(string manufacturerID, string modelFilter)
+        public async Task<IEnumerable<Model>> GetModels(string manufacturerID, string modelFilter)
         {
             if (string.IsNullOrEmpty(manufacturerID) && string.IsNullOrEmpty(modelFilter))
                 throw new ArgumentNullException(nameof(manufacturerID), "Must have at least one parameter declared.");
@@ -67,11 +65,46 @@ namespace AirMapDotNet
                 query.Add("q", modelFilter);
 
             EntityCollection<Model> modelCollection = await GetAsync(modelLink, query);
+            
+            return modelCollection;
+        }
 
-            foreach (Model model in modelCollection)
-                model.AirMap = this;
+        /// <summary>
+        /// Retrieves a list of drone models from a particular manufacturer.
+        /// </summary>
+        /// <param name="manufacturer">The manufacturer of the drone.</param>
+        /// <returns>A list of drone models by <paramref name="manufacturer"/>.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="manufacturer"/> is null.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        /// <example>
+        /// <code>
+        /// AirMap am = new AirMap("YOUR API KEY");
+        /// 
+        /// // All Phantom drones from DJI
+        /// var phantoms = await am.GetModels(manufacturerID: "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9", modelFilter: "phantom");
+        /// 
+        /// // All drones by Yuneec
+        /// var phantoms = await am.GetModels(manufacturerID: "0c71de37-d500-4702-91ef-56d7ec606aa7");
+        /// 
+        /// // All drones containing the word "Typhoon"
+        /// var phantoms = await am.GetModels(modelFilter: "Typhoon");
+        /// </code></example>
+        public async Task<IEnumerable<Model>> GetModels(Manufacturer manufacturer)
+        {
+            if (manufacturer == null)
+                throw new ArgumentNullException(nameof(manufacturer));
+            
+            Href<EntityCollection<Model>> modelLink =
+                new Href<EntityCollection<Model>>(new Uri("https://api.airmap.com/aircraft/v2/model"));
 
-            return modelCollection.ToArray();
+            NameValueCollection query = new NameValueCollection
+            {
+                ["manufacturer"] = manufacturer.ID
+            };
+
+            EntityCollection<Model> modelCollection = await GetAsync(modelLink, query);
+
+            return modelCollection;
         }
 
         /// <summary>

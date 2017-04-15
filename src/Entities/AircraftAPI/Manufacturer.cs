@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace AirMapDotNet.Entities.AircraftAPI
@@ -7,21 +9,30 @@ namespace AirMapDotNet.Entities.AircraftAPI
     /// A description of a manufacturer recognized by AirMap.
     /// </summary>
     [DebuggerDisplay("Manufacturer Name={Name}")]
-    public class Manufacturer : AirMapEntity
+    public sealed class Manufacturer : AirMapEntity
     {
         /// <summary>
         /// The unique GUID associated with this <see cref="Manufacturer"/>.
         /// </summary>
         [JsonProperty("id")]
-        public virtual string ID { get; set; }
+        public string ID { get; internal set; }
 
         /// <summary>
         /// The manufacturer's name.
         /// </summary>
         [JsonProperty("name")]
-        public virtual string Name { get; set; }
+        public string Name { get; internal set; }
 
         /// <inheritdoc/>
         public override string ToString() => Name;
+
+        /// <summary>
+        /// Retrieves a list of drone models from this manufacturer.
+        /// </summary>
+        /// <returns>A list of drone models from this manufacturer.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        public async Task<IEnumerable<Model>> GetModels()
+            => await AirMap.GetModels(this);
     }
 }
