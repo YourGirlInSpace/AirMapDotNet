@@ -1,0 +1,11 @@
+site_name: AirMapDotNet
+site_url: http://airmapdotnet.rtfd.io
+site_description: Documentation for AirMapDotNet.
+site_author: Zazzmatazz
+
+repo_url: https://github.com/Zazzmatazz/AirMapDotNet/
+
+pages:
+ - Home: index.md
+ - Basics:
+   - Authentication: Authentication.md
