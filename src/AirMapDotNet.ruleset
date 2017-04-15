@@ -2,6 +2,7 @@
 <RuleSet Name="Rules for AirMapDotNet" Description="Code analysis rules for AirMapDotNet.csproj." ToolsVersion="14.0">
   <Include Path="basicdesignguidelinerules.ruleset" Action="Default" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1006" Action="None" />
     <Rule Id="CA1021" Action="Warning" />
     <Rule Id="CA1040" Action="Warning" />
     <Rule Id="CA1045" Action="Warning" />

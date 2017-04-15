@@ -56,8 +56,9 @@ namespace AirMapDotNet
             UriBuilder uriBuilder = new UriBuilder(Uri);
 
             NameValueCollection query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            foreach (KeyValuePair<string, string> parms in parameters)
-                query[parms.Key] = parms.Value;
+            
+            foreach (string key in parameters.AllKeys)
+                query[key] = parameters[key];
 
             uriBuilder.Query = query.ToString();
 
