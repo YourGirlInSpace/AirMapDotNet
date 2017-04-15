@@ -1,0 +1,45 @@
+# NameMessagePair.Message Property 
+ 
+
+The reason why the query parameter failed.
+
+**Namespace:**&nbsp;<a href="N_AirMapDotNet_Entities">AirMapDotNet.Entities</a><br />**Assembly:**&nbsp;AirMapDotNet (in AirMapDotNet.dll) Version: 1.0.6313.34627 (1.0)
+
+## Syntax
+
+**C#**<br />
+``` C#
+public virtual string Message { get; set; }
+```
+
+**VB**<br />
+``` VB
+Public Overridable Property Message As String
+	Get
+	Set
+```
+
+**C++**<br />
+``` C++
+public:
+virtual property String^ Message {
+	String^ get ();
+	void set (String^ value);
+}
+```
+
+**F#**<br />
+``` F#
+abstract Message : string with get, set
+override Message : string with get, set
+```
+
+
+#### Property Value
+Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>
+
+## See Also
+
+
+#### Reference
+<a href="T_AirMapDotNet_Entities_NameMessagePair">NameMessagePair Class</a><br /><a href="N_AirMapDotNet_Entities">AirMapDotNet.Entities Namespace</a><br />
