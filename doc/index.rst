@@ -9,8 +9,7 @@ AirMapDotNet
    :maxdepth: 4
    :caption: Contents:
 
-   README
-   AirMapDotNet
+   Authentication
 
 
 
