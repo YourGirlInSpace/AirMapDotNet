@@ -8,6 +8,13 @@ repo_url: https://github.com/Zazzmatazz/AirMapDotNet/
 pages:
   - Home: index.md
   - Basics:
+    - Getting Started: Getting Started.md
     - Authentication: Authentication.md
+  - Aircraft API:
+    - Manufacturers and Models: Aircraft/Manufacturers and Models.md
+  - Status API:
+    - Getting a Status: Status/Getting a Status.md
+    - Advisory Color: Status/Advisory Color.md
+    - Weather: Status/Weather.md
 
 theme: readthedocs
