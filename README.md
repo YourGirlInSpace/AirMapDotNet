@@ -7,7 +7,7 @@ AirMapDotNet is an open source library for accessing and manipulating the AirMap
 To access the API, you need to register for an AirMap developer account [here](https://dashboard.airmap.io/developer).
 
 ### Read the Documentation
-The documentation for this project is located [here](https://github.com/Zazzmatazz/AirMapDotNet/wiki)
+The documentation for this project is located [here](http://airmapdotnet.rtfd.io/)
 
 ## Using the SDK
 
@@ -25,6 +25,6 @@ AuthenticationToken at = new AuthenticationToken(ID_TOKEN);
 am.AuthenticationToken = at;
 ```
 
-Please see the [documentation](https://github.com/Zazzmatazz/AirMapDotNet/wiki) for details on each method and what is available.
+Please see the [documentation](http://airmapdotnet.rtfd.io/) for details on each method and what is available.
 
 Have fun!
