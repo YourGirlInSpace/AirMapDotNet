@@ -6,6 +6,8 @@ site_author: Zazzmatazz
 repo_url: https://github.com/Zazzmatazz/AirMapDotNet/
 
 pages:
- - Home: index.md
- - Basics:
-   - Authentication: Authentication.md
+  - Home: index.md
+  - Basics:
+    - Authentication: Authentication.md
+
+theme: readthedocs
