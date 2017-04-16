@@ -45,3 +45,6 @@ If the code above does not produce an `AirMapException`, you're good to go!
 ## Documentation
 
 Documentation is hosted on ReadTheDocs [here](http://airmapdotnet.rtfd.io/).
+
+
+<sub><sub>Disclaimer:  AirMapDotNet is not, and does not claim to be affiliated with AirMap or any of its products or employees.  This is an open source project available to the public under the GNU Public License.  Trademarks referenced, including AIRMAP, NOFLYZONE, and DRONEZONING and any associated logos are owned exclusively by AirMap, Inc.<sub><sub>
