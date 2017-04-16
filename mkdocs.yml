@@ -11,8 +11,10 @@ pages:
     - Getting Started: Getting Started.md
     - Authentication: Authentication.md
   - Aircraft API:
+    - The Aircraft API: Aircraft/Aircraft.md
     - Manufacturers and Models: Aircraft/Manufacturers and Models.md
   - Status API:
+    - The Status API: Status/Status.md
     - Getting a Status: Status/Getting a Status.md
     - Advisory Color: Status/Advisory Color.md
     - Weather: Status/Weather.md
