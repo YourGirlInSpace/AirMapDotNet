@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +25,51 @@
     <DocumentationFile>bin\Debug\AirMapDotNet.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AirMapDotNet.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>%28none%29</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +82,26 @@
     <CodeAnalysisRuleSet>AirMapDotNet.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\AirMapDotNet.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Auth0.AuthenticationApi, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.AuthenticationApi.3.6.0\lib\net45\Auth0.AuthenticationApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Auth0.Core, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.Core.3.6.0\lib\net45\Auth0.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Auth0.ManagementApi, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Auth0.ManagementApi.3.6.0\lib\net45\Auth0.ManagementApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -54,8 +119,11 @@
     <Compile Include="AirMap.Pilot.cs" />
     <Compile Include="AirMap.Status.cs" />
     <Compile Include="AirMapException.cs" />
-    <Compile Include="Auth\AuthenticationException.cs" />
-    <Compile Include="Auth\AuthenticationToken.cs" />
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\AuthenticationException.cs" />
+    <Compile Include="Authentication\AuthenticationToken.cs" />
+    <Compile Include="Authentication\User.cs" />
+    <Compile Include="APIConfiguration.cs" />
     <Compile Include="Entities\AircraftAPI\Aircraft.cs" />
     <Compile Include="Entities\AirMapEntity.cs" />
     <Compile Include="Entities\AirspaceObjects\Airport.cs" />
@@ -74,6 +142,7 @@
     <Compile Include="Entities\AirspaceObjects\SpecialUseAirspace.cs" />
     <Compile Include="Entities\AirspaceObjects\TFR.cs" />
     <Compile Include="Entities\AirspaceObjects\Wildfire.cs" />
+    <Compile Include="Entities\EmptyEntity.cs" />
     <Compile Include="Entities\EntityCollection.cs" />
     <Compile Include="Entities\AirMapErrorData.cs" />
     <Compile Include="Entities\AircraftAPI\Manufacturer.cs" />
@@ -98,6 +167,7 @@
     <Compile Include="Entities\GeoJSON\GeoObjects\GeometryObject.cs" />
     <Compile Include="Entities\GeoJSON\Converters\GeometryConverter.cs" />
     <Compile Include="Entities\GeoJSON\GeoObjects\GeometryObjectType.cs" />
+    <Compile Include="Entities\GeoJSON\GeoObjects\GeometryTypeAttribute.cs" />
     <Compile Include="Entities\GeoJSON\GeoObjects\LineString.cs" />
     <Compile Include="Entities\GeoJSON\GeoObjects\MultiLineString.cs" />
     <Compile Include="Entities\GeoJSON\GeoObjects\MultiPoint.cs" />
@@ -113,6 +183,9 @@
     <Compile Include="Entities\JWTPayload.cs" />
     <Compile Include="Entities\NameMessagePair.cs" />
     <Compile Include="Entities\PilotAPI\PilotProfile.cs" />
+    <Compile Include="Entities\PilotAPI\Statistics.cs" />
+    <Compile Include="Entities\PilotAPI\UpdatePilotProfile.cs" />
+    <Compile Include="Entities\PilotAPI\VerificationStatus.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\StatusAPI\Converters\StatusConverter.cs" />
     <Compile Include="Entities\StatusAPI\Status.cs" />
@@ -125,11 +198,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requestors\HTTPRequestor.cs" />
     <Compile Include="Requestors\Requestor.cs" />
+    <Compile Include="Services\AircraftService.cs" />
+    <Compile Include="Services\AirMapService.cs" />
+    <Compile Include="Services\FlightService.cs" />
+    <Compile Include="Services\IAirMapService.cs" />
+    <Compile Include="Services\PilotService.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="AirMapDotNet.ruleset" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

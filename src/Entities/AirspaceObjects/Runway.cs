@@ -5,7 +5,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// <summary>
     /// Represents an airport's runway.
     /// </summary>
-    public class Runway
+    public sealed class Runway
     {
         /// <summary>
         /// The identifier of the runway.

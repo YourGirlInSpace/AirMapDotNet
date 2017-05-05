@@ -8,6 +8,7 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     /// A feature with multiple <see cref="LineString"/>s.
     /// </summary>
     [JsonConverter(typeof(MultiLineStringConverter))]
+    [GeometryType(GeometryObjectType.MultiLineString)]
     public sealed class MultiLineString : GeometryObject
     {
         /// <summary>

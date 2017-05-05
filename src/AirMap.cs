@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities;
 using AirMapDotNet.Requestors;
+using AirMapDotNet.Services;
 
 [assembly:CLSCompliant(true)]
 namespace AirMapDotNet
@@ -11,14 +13,13 @@ namespace AirMapDotNet
     /// <summary>
     /// The representation of a session on the AirMap API.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class AirMap
     {
         /// <summary>
-        /// The API key used by this session.
+        /// The API configuration used by this session.
         /// </summary>
-        /// <remarks>The API key is a JWT token, though not with a standard payload.
-        /// There currently is no method to directly validate an API key.</remarks>
-        internal string APIKey { get; }
+        internal APIConfiguration Config { get; }
 
         /// <summary>
         /// The <see cref="Requestor"/> used to interact with the AirMap API.
@@ -28,16 +29,36 @@ namespace AirMapDotNet
         /// <summary>
         /// The authentication token used by this session.
         /// </summary>
-        public AuthenticationToken AuthenticationToken { get; set; } = null;
+        public AuthenticationToken AuthenticationToken { get; set; }
+
+        private AirMap()
+        {
+            _pilotService = new PilotService(this);
+            _statusService = new StatusService(this);
+            _flightService = new FlightService(this);
+            _aircraftService = new AircraftService(this);
+        }
 
         /// <summary>
-        /// Creates a new AirMap API session using the provided <paramref name="apiKey"/>.
+        /// Creates a new AirMap API session using the provided <paramref name="config"/>.
         /// </summary>
-        /// <param name="apiKey">Your AirMap API key.</param>
-        public AirMap(string apiKey)
+        /// <param name="config">The <see cref="APIConfiguration"/> for this session.</param>
+        public AirMap(APIConfiguration config)
+            : this()
         {
             Requestor = new HTTPRequestor();
-            APIKey = apiKey;
+            Config = config;
+        }
+
+        /// <summary>
+        /// Creates a new AirMap API session using the provided <paramref name="config"/> and an <see cref="AuthenticationToken"/>.
+        /// </summary>
+        /// <param name="config">The <see cref="APIConfiguration"/> for this session.</param>
+        /// <param name="auth">The authentication token.</param>
+        public AirMap(APIConfiguration config, AuthenticationToken auth)
+            : this(config)
+        {
+            AuthenticationToken = auth;
         }
 
         /// <summary>
@@ -102,7 +123,7 @@ namespace AirMapDotNet
 
             try
             {
-                result = await Requestor.GetAsync<T>(uri, APIKey, AuthenticationToken)
+                result = await Requestor.GetAsync<T>(uri, Config.APIKey, AuthenticationToken)
                     .ConfigureAwait(false);
                 result.AirMap = this;
             }
@@ -115,6 +136,73 @@ namespace AirMapDotNet
             }
 
             return result;
+        }
+        
+        /// <summary>
+         /// Requests a resource from the AirMap API.
+         /// </summary>
+         /// <param name="uri">The URL of the resource.</param>
+         /// <returns>The resultant data.</returns>
+         /// <exception cref="AirMapException">If the request fails.</exception>
+        internal async Task<string> GetStatusAsync(Href uri)
+            => uri == null
+            ? string.Empty
+            : await GetStatusAsync(uri.Compile())
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Requests a resource from the AirMap API.
+        /// </summary>
+        /// <param name="uri">The URL of the resource.</param>
+        /// <param name="parameters">Query parameters for the resource request.</param>
+        /// <returns>The resultant data.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        internal async Task<string> GetStatusAsync(Href uri, NameValueCollection parameters)
+             => uri == null
+            ? string.Empty
+            : await GetStatusAsync(uri.Compile(parameters))
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Requests a resource from the AirMap API.
+        /// </summary>
+        /// <param name="uri">The URL of the resource.</param>
+        /// <returns>The resultant data.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        internal string GetStatus(Href uri)
+            => GetStatusAsync(uri).Result;
+
+        /// <summary>
+        /// Requests a resource from the AirMap API.
+        /// </summary>
+        /// <param name="uri">The URL of the resource.</param>
+        /// <param name="parameters">Query parameters for the resource request.</param>
+        /// <returns>The resultant data.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        internal string GetStatus(Href uri, NameValueCollection parameters)
+            => GetStatusAsync(uri, parameters).Result;
+
+
+        /// <summary>
+        /// Requests a resource from the AirMap API.
+        /// </summary>
+        /// <param name="uri">The URL of the resource.</param>
+        /// <returns>The resultant data.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        private async Task<string> GetStatusAsync(Uri uri)
+        {
+            try
+            {
+                return await Requestor.GetAsync(uri, Config.APIKey, AuthenticationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (AirMapException ame)
+            {
+                // Authorization:  Refresh if applicable.
+
+
+                throw new AirMapException("Failed to get data.", ame);
+            }
         }
 
         /// <summary>
@@ -191,14 +279,14 @@ namespace AirMapDotNet
 
             try
             {
-                result = await Requestor.PostAsync<T>(uri, APIKey, AuthenticationToken, data)
+                result = await Requestor.PostAsync<T>(uri, Config.APIKey, AuthenticationToken, data)
                     .ConfigureAwait(false);
                 result.AirMap = this;
             }
             catch (AirMapException ame)
             {
                 // Authorization:  Refresh if applicable.
-                
+
                 throw new AirMapException("Failed to post data.", ame);
             }
 
@@ -281,7 +369,7 @@ namespace AirMapDotNet
 
             try
             {
-                result = await Requestor.PatchAsync<T>(uri, APIKey, AuthenticationToken, data)
+                result = await Requestor.PatchAsync<T>(uri, Config.APIKey, AuthenticationToken, data)
                     .ConfigureAwait(false);
                 result.AirMap = this;
             }
@@ -298,6 +386,17 @@ namespace AirMapDotNet
         /// <summary>
         /// Deletes a resource on the AirMap API.
         /// </summary>
+        /// <param name="href">The URL of the resource.</param>
+        /// <returns>The resultant data.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        internal Task DeleteAsync(Href href)
+        {
+            return DeleteAsync(href.Uri);
+        }
+
+        /// <summary>
+        /// Deletes a resource on the AirMap API.
+        /// </summary>
         /// <param name="uri">The URL of the resource.</param>
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
@@ -305,7 +404,7 @@ namespace AirMapDotNet
         {
             try
             {
-                await Requestor.DeleteAsync(uri, APIKey, AuthenticationToken)
+                await Requestor.DeleteAsync(uri, Config.APIKey, AuthenticationToken)
                     .ConfigureAwait(false);
             }
             catch (AirMapException ame)

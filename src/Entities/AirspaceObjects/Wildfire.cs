@@ -4,7 +4,7 @@
     /// Represents a wildfire.
     /// </summary>
     [ObjectType("fire")]
-    public class Wildfire : AirspaceObject
+    public sealed class Wildfire : AirspaceObject
     {
         /// <summary>
         /// The date this restriction is valid.

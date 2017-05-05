@@ -5,7 +5,7 @@ namespace AirMapDotNet.Entities.StatusAPI
     /// <summary>
     /// Provides a current snapshot of weather conditions in the flight area.
     /// </summary>
-    public class Weather
+    public sealed class Weather
     {
         /// <summary>
         /// Overall weather conditions, e.g. "partly cloudy"

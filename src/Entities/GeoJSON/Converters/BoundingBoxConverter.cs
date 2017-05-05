@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AirMapDotNet.Entities.GeoJSON.Converters
 {
-    internal class BoundingBoxConverter : JsonConverter
+    internal sealed class BoundingBoxConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -15,12 +15,11 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             if (serializer == null)
                 throw new ArgumentNullException(nameof(serializer));
 
+            BoundingBox bbox = value as BoundingBox;
 
-            if (!(value is BoundingBox))
+            if (bbox == null)
                 throw new AirMapException("Failed to write GeoJSON:  Supposed Position is not a BoundingBox!");
-
-            BoundingBox bbox = (BoundingBox)value;
-
+            
             bool write3d = (Math.Abs(bbox.SouthWest.Elevation) > Position.Epsilon) ||
                            (Math.Abs(bbox.NorthEast.Elevation) > Position.Epsilon);
 

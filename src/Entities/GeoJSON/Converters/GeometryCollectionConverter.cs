@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AirMapDotNet.Entities.GeoJSON.Converters
 {
-    internal class GeometryCollectionConverter : JsonConverter
+    internal sealed class GeometryCollectionConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

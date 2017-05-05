@@ -8,7 +8,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// </summary>
     /// <remarks>A flight rule currently describes the Commercial Flight Rules and the Recreational Flight Rules,
     /// which have different boundaries.</remarks>
-    public class Rule
+    public sealed class Rule
     {
         /// <summary>
         /// The name of the rule.

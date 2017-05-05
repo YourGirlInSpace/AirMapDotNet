@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using AirMapDotNet.Entities.GeoJSON;
 using AirMapDotNet.Entities.GeoJSON.GeoObjects;
 
@@ -23,16 +26,14 @@ namespace AirMapDotNet
                 throw new ArgumentNullException(nameof(topLeft));
             if (bottomRight == null)
                 throw new ArgumentNullException(nameof(bottomRight));
+            
+            LatLon bottomLeft = new LatLon(bottomRight.Latitude, topLeft.Longitude);
+            LatLon topRight = new LatLon(topLeft.Latitude, bottomRight.Longitude);
 
-            double latTop = topLeft.Latitude;
-            double latBot = bottomRight.Latitude;
-            double lonLeft = topLeft.Longitude;
-            double lonRight = bottomRight.Longitude;
-
-            LatLon bottomLeft = new LatLon(latBot, lonLeft);
-            LatLon topRight = new LatLon(latTop, lonRight);
-
-            Geometry geom = new Geometry {GeometryType = "Polygon"};
+            Geometry geom = new Geometry
+            {
+                GeometryType = GeometryObjectType.Polygon
+            };
 
             Polygon poly = new Polygon();
             
@@ -82,7 +83,7 @@ namespace AirMapDotNet
 
             double iter = 360.0/points;
             
-            Geometry geom = new Geometry {GeometryType = "Polygon"};
+            Geometry geom = new Geometry { GeometryType = GeometryObjectType.Polygon };
 
             Polygon poly = new Polygon();
 
@@ -114,7 +115,7 @@ namespace AirMapDotNet
             if (points.Length < 2)
                 throw new ArgumentOutOfRangeException(nameof(points), $"{nameof(points)} must have at least 2 elements.");
 
-            Geometry geom = new Geometry {GeometryType = "LineString"};
+            Geometry geom = new Geometry { GeometryType = GeometryObjectType.LineString };
             
             LineString ls = new LineString();
             foreach (LatLon pt in points)
@@ -123,6 +124,50 @@ namespace AirMapDotNet
             geom.GeometryObject = ls;
 
             return geom;
+        }
+        
+        internal static double CalculateArea(Collection<LineString> lineStrings)
+        {
+            // The area of the first LineString boundary is  the outer ring, and is the greatest area.
+            // The area of all other LineStrings are holes.  Subtract the area of the holes from the sum.
+
+            double area = CalculateArea(lineStrings[0]);
+
+            for (int i = 1; i < lineStrings.Count; i++)
+                area -= CalculateArea(lineStrings[i]);
+
+            return area;
+        }
+
+        // The lock prevents problems with this.
+        [SuppressMessage("ReSharper", "AccessToModifiedClosure")]
+        internal static double CalculateArea(LineString ls)
+        {
+            if (ls.Points.Count < 2)
+                return 0;
+
+            object theLockToWolfBlitzersBoathouse = new object();
+            double area = 0;
+
+            // Using the Parallel framework to speed up calculations with absurd
+            // numbers of points.  Yaaaay multiple processors.
+            Parallel.For(0, ls.Points.Count - 1, (i, state) =>
+            {
+                LatLon a = ls.Points[i].LatLon;
+                LatLon b = ls.Points[i + 1].LatLon;
+
+                double aLatRad = Utilities.ToRadians(a.Latitude);
+                double aLonRad = Utilities.ToRadians(a.Longitude);
+                double bLatRad = Utilities.ToRadians(b.Latitude);
+                double bLonRad = Utilities.ToRadians(b.Longitude);
+
+                lock (theLockToWolfBlitzersBoathouse)
+                    area += (bLonRad - aLonRad)*(2 + Math.Sin(aLatRad + bLatRad));
+            });
+
+            area = area * LatLon.EarthRadius * LatLon.EarthRadius / 2.0;
+
+            return Math.Abs(area);
         }
     }
 }

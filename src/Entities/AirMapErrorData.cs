@@ -6,12 +6,12 @@ namespace AirMapDotNet.Entities
     /// <summary>
     /// Represents an Error data response from the AirMap API server.
     /// </summary>
-    public class AirMapErrorData : AirMapEntity
+    public sealed class AirMapErrorData : AirMapEntity
     {
         /// <summary>
         /// An array of <see cref="NameMessagePair"/>s that describes each problematic query and how it failed.
         /// </summary>
         [JsonProperty("errors")]
-        public virtual Collection<NameMessagePair> Errors { get; }
+        public Collection<NameMessagePair> Errors { get; } = new Collection<NameMessagePair>();
     }
 }

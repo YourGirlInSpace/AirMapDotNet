@@ -8,6 +8,7 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     /// A feature comprised of multiple <see cref="Polygon"/>s.
     /// </summary>
     [JsonConverter(typeof(MultiPolygonConverter))]
+    [GeometryType(GeometryObjectType.MultiPolygon)]
     public sealed class MultiPolygon : GeometryObject
     {
         /// <summary>

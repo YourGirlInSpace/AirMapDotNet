@@ -8,7 +8,7 @@ namespace AirMapDotNet.Entities.FlightAPI
     /// <summary>
     /// Provides flight creation parameters to the AirMap API.
     /// </summary>
-    public class FlightCreationParameters
+    public sealed class FlightCreationParameters
     {
         /// <summary>
         /// The latitude of the takeoff point in degrees.

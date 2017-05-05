@@ -8,8 +8,25 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     /// A feature with shapes defined by <see cref="LineString"/> <see cref="Boundaries"/>.
     /// </summary>
     [JsonConverter(typeof(PolygonConverter))]
+    [GeometryType(GeometryObjectType.Polygon)]
     public sealed class Polygon : GeometryObject
     {
+        private double _area = -1;
+
+        /// <summary>
+        /// The area of the <see cref="Polygon"/> in square meters.
+        /// </summary>
+        public double Area
+        {
+            get
+            {
+                if (_area < 0)
+                    _area = GeoUtilities.CalculateArea(Boundaries);
+
+                return _area;
+            }
+        }
+
         /// <summary>
         /// A list of boundaries for each polygon shape.
         /// </summary>

@@ -4,7 +4,7 @@
     /// Represents a university, high school, middle school, elementary school or other school.
     /// </summary>
     [ObjectType("school")]
-    public class School : AirspaceObject
+    public sealed class School : AirspaceObject
     {
         
     }

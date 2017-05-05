@@ -4,7 +4,7 @@
     /// Represents a Hospital
     /// </summary>
     [ObjectType("hospital")]
-    public class Hospital : AirspaceObject
+    public sealed class Hospital : AirspaceObject
     {
         
     }

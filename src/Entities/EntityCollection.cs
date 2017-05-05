@@ -8,7 +8,7 @@ namespace AirMapDotNet.Entities
     /// Describes an unnamed list of <typeparamref name="T"/>
     /// </summary>
     /// <typeparam name="T">The type contained within the collection.</typeparam>
-    public class EntityCollection<T> : AirMapEntity, IList<T>
+    public sealed class EntityCollection<T> : AirMapEntity, IList<T>
         where T : class, IAirMapEntity
     {
         private readonly List<T> data = new List<T>();
