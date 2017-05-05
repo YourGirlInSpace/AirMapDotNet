@@ -5,7 +5,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// <summary>
     /// Describes the requirements to fly in or around an <see cref="AirspaceObject"/>.
     /// </summary>
-    public class Requirements
+    public sealed class Requirements
     {
         /// <summary>
         /// The routes of notice this object requires.
@@ -17,7 +17,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// <summary>
     /// Describes the routes of notice that an <see cref="AirspaceObject"/> provides.
     /// </summary>
-    public class Notice
+    public sealed class Notice
     {
         /// <summary>
         /// If <b>true</b>, digital notification are supported.

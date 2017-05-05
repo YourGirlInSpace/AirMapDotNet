@@ -37,6 +37,16 @@ namespace AirMapDotNet.Requestors
             where T : class, IAirMapEntity;
 
         /// <summary>
+        /// Requests a specific resource using the <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The URI to request the resource from.</param>
+        /// <param name="apiKey">Your AirMap API key.</param>
+        /// <param name="token">The authentication token to use in this request.</param>
+        /// <returns>The requested resource as a string.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is null.</exception>
+        public abstract Task<string> GetAsync(Uri uri, string apiKey, AuthenticationToken token);
+
+        /// <summary>
         /// Posts an update for the resource at <paramref name="uri"/>.
         /// </summary>
         /// <param name="uri">The URI of the resource.</param>
@@ -80,7 +90,7 @@ namespace AirMapDotNet.Requestors
         /// <returns>The deserialized data, casted to <typeparamref name="T"/>.</returns>
         /// <exception cref="AirMapException">If the deserialization fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null or equals <see cref="string.Empty"/>.</exception>
-        public virtual T DeserializeJSON<T>(string data)
+        internal virtual T DeserializeJSON<T>(string data)
         {
             if (string.IsNullOrEmpty(data))
                 throw new ArgumentNullException(nameof(data));
@@ -101,7 +111,7 @@ namespace AirMapDotNet.Requestors
         /// <returns>The serialized JSON string.</returns>
         /// <exception cref="AirMapException">If the serialization fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public virtual string SerializeJSON(object data)
+        internal virtual string SerializeJSON(object data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));

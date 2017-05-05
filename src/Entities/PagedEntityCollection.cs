@@ -11,7 +11,7 @@ namespace AirMapDotNet.Entities
     /// </summary>
     /// <typeparam name="T">The type represented in this collection.</typeparam>
     [JsonObject]
-    public class PagedEntityCollection<T>
+    public sealed class PagedEntityCollection<T>
         : AirMapEntity, IList<T>
         where T : class, IAirMapEntity
     {

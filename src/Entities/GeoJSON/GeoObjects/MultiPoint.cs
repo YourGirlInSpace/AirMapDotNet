@@ -8,6 +8,7 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     /// A feature with multiple individual points.
     /// </summary>
     [JsonConverter(typeof(MultiPointConverter))]
+    [GeometryType(GeometryObjectType.MultiPoint)]
     public sealed class MultiPoint : GeometryObject
     {
         /// <summary>

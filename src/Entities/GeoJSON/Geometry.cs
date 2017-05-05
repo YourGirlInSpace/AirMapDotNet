@@ -14,7 +14,7 @@ namespace AirMapDotNet.Entities.GeoJSON
         /// The type of element.
         /// </summary>
         [JsonProperty("type")]
-        public string GeometryType { get; set; }
+        public GeometryObjectType GeometryType { get; set; }
 
         /// <summary>
         /// The feature described by this Geometry object.

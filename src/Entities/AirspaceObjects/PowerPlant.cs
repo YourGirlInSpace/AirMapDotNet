@@ -4,7 +4,7 @@
     /// Represents a power plant.
     /// </summary>
     [ObjectType("power_plant")]
-    public class PowerPlant : AirspaceObject
+    public sealed class PowerPlant : AirspaceObject
     {
         /// <summary>
         /// The type of power plant.

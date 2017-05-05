@@ -43,44 +43,67 @@ namespace AirMapDotNet
         /// </remarks>
         public const double Epsilon = 1e-7;
 
+        private double _lat, _lon;
+
         /// <summary>
         /// The Longitude.
         /// </summary>
-        public double Longitude { get; set; }
+        /// <value>The Longitude, in degrees.  Must be between -180 and +180.</value>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="value"/> is less than -180 or greater than +180.</exception>
+        public double Longitude
+        {
+            get { return _lon; }
+            set
+            {
+                if (value < -180 || value > 180)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Longitude must be in range -180 to 180.");
+
+                _lon = value;
+            }
+        }
 
         /// <summary>
         /// The Latitude.
         /// </summary>
-        public double Latitude { get; set; }
+        /// <value>The Latitude, in degrees.  Must be between -90 and +90.</value>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="value"/> is less than -90 or greater than +90.</exception>
+        public double Latitude
+        {
+            get { return _lat; }
+            set
+            {
+                if (value < -90 || value > 90)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Latitude must be in range -90 to 90.");
 
+                _lat = value;
+            }
+        }
 
+        /// <summary>
+        /// Creates a new <see cref="LatLon"/> at 0N 0W.
+        /// </summary>
+        public LatLon()
+        {
+            Latitude = 0;
+            Longitude = 0;
+        }
+        
         /// <summary>
         /// Creates a new <see cref="LatLon"/> with the described <paramref name="lat"/> and <paramref name="lon"/>.
         /// </summary>
         /// <param name="lat">The value to assign to <see cref="Latitude"/></param>
         /// <param name="lon">The value to assign to <see cref="Longitude"/></param>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="lat"/> is less than -90 or greater than +90.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="lon"/> is less than -180 or greater than +180.</exception>
         public LatLon(double lat, double lon)
         {
+            if (lat < -90 || lat > 90)
+                throw new ArgumentOutOfRangeException(nameof(lat), "Latitude must be in range -90 to 90.");
+            if (lon < -180 || lon > 180)
+                throw new ArgumentOutOfRangeException(nameof(lon), "Longitude must be in range -180 to 180.");
+
             Latitude = lat;
             Longitude = lon;
-        }
-
-        /// <summary>
-        /// Explicitly converts a <see cref="double"/> array into a <see cref="LatLon"/> object.
-        /// </summary>
-        /// <remarks>This method assumes that array index 0 is the longitude, and array index 1 is the latitude.</remarks>
-        /// <param name="data">The array of coordinates.</param>
-        /// <returns>A <see cref="LatLon"/> object that represents the array.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="data"/> does not have exactly two elements.</exception>
-        /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public static explicit operator LatLon(double[] data)
-        {
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
-            if (data.Length != 2)
-                throw new ArgumentOutOfRangeException(nameof(data), "Data must be exactly 2 elements long.");
-
-            return new LatLon(data[1], data[0]);
         }
 
         /// <summary>
@@ -100,8 +123,7 @@ namespace AirMapDotNet
             return
                 $"{Math.Abs(lat_deg):0#}°{Math.Abs(lat_min):0#}'{Math.Abs(lat_secs):0#.0}\"{(Latitude < 0 ? "S" : "N")} {Math.Abs(lon_deg):0#}°{Math.Abs(lon_min):0#}'{Math.Abs(lon_secs):0#.0}\"{(Longitude < 0 ? "W" : "E")}";
         }
-
-
+        
         /// <summary>
         /// Projects a new <see cref="LatLon"/> exactly <paramref name="bearing"/> degrees and <paramref name="distance"/> meters away.
         /// </summary>

@@ -9,7 +9,7 @@ namespace AirMapDotNet.Entities.StatusAPI
     /// Provides the current status of a proposed flight area.
     /// </summary>
     [JsonConverter(typeof(StatusConverter))]
-    public class Status : AirMapEntity
+    public sealed class Status : AirMapEntity
     {
         /// <summary>
         /// The distance between a flight's takeoff point and the nearest yellow or red zone in meters.

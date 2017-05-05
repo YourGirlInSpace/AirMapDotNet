@@ -7,7 +7,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// Represents an airport.
     /// </summary>
     [ObjectType("airport")]
-    public class Airport : AirspaceObject
+    public sealed class Airport : AirspaceObject
     {
         /// <summary>
         /// The airport's IATA code.

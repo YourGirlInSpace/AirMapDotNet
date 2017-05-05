@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using AirMapDotNet.Entities.GeoJSON.Converters;
+using Newtonsoft.Json;
 
 namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
 {
@@ -8,6 +10,8 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     // I am suppressing this message because this is exactly what the GeoJSON specification calls
     // this object.  RFC7946 § 3.1.8
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+    [JsonConverter(typeof(GeometryCollectionConverter))]
+    [GeometryType(GeometryObjectType.Collection)]
     public sealed class GeometryCollection : GeometryObject
     {
         /// <summary>

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AirMapDotNet.Entities.StatusAPI.Converters
 {
-    internal class StatusConverter : JsonConverter
+    internal sealed class StatusConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

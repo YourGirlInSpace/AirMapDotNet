@@ -4,7 +4,7 @@
     /// Represents a controlled class B, C, D, or E airspace.
     /// </summary>
     [ObjectType("controlled_airspace")]
-    public class ControlledAirspace : AirspaceObject
+    public sealed class ControlledAirspace : AirspaceObject
     {
         
     }

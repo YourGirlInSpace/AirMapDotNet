@@ -2,7 +2,7 @@
 
 namespace AirMapDotNet.Entities.FlightAPI
 {
-    internal class FlightDeletionParameters : AirMapEntity
+    internal sealed class FlightDeletionParameters : AirMapEntity
     {
         [JsonProperty("id")]
         public string ID { get; internal set; }

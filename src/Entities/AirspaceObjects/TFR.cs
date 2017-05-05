@@ -6,7 +6,7 @@ namespace AirMapDotNet.Entities.AirspaceObjects
     /// Represents a temporary flight restriction.
     /// </summary>
     [ObjectType("tfr")]
-    public class TFR : AirspaceObject
+    public sealed class TFR : AirspaceObject
     {
         /// <summary>
         /// A detailed FAA URL describing the TFR.

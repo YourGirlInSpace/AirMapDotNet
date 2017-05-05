@@ -4,7 +4,7 @@
     /// Represents a registered heliport.
     /// </summary>
     [ObjectType("heliport")]
-    public class Heliport : AirspaceObject
+    public sealed class Heliport : AirspaceObject
     {
         /// <summary>
         /// The ICAO identifier for this heliport.

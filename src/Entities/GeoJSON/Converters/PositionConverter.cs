@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace AirMapDotNet.Entities.GeoJSON.Converters
 {
-    internal class PositionConverter : JsonConverter
+    internal sealed class PositionConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -15,12 +15,11 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             if (serializer == null)
                 throw new ArgumentNullException(nameof(serializer));
 
+            Position pos = value as Position;
 
-            if (!(value is Position))
+            if (pos == null)
                 throw new AirMapException("Failed to write GeoJSON:  Supposed Position is not a Position!");
-
-            Position pos = (Position) value;
-
+            
             writer.WriteStartArray();
             writer.WriteValue(pos.LatLon.Longitude);
             writer.WriteValue(pos.LatLon.Latitude);

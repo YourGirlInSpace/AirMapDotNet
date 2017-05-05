@@ -7,25 +7,25 @@ namespace AirMapDotNet.Entities.AircraftAPI
     /// Represents a drone model.
     /// </summary>
     [DebuggerDisplay("Model Name={Name}")]
-    public class Model : AirMapEntity
+    public sealed class Model : AirMapEntity
     {
         /// <summary>
         /// The unique GUID for this drone model.
         /// </summary>
         [JsonProperty("id")]
-        public virtual string ID { get; set; }
+        public string ID { get; internal set; }
 
         /// <summary>
         /// The model name of the drone.
         /// </summary>
         [JsonProperty("name")]
-        public virtual string Name { get; set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// The drone's manufacturer.
         /// </summary>
         [JsonProperty("manufacturer")]
-        public virtual Manufacturer Manufacturer { get; set; }
+        public Manufacturer Manufacturer { get; internal set; }
 
         /// <inheritdoc/>
         public override string ToString() => Name;

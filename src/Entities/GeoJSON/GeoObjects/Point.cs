@@ -7,6 +7,7 @@ namespace AirMapDotNet.Entities.GeoJSON.GeoObjects
     /// Represents a singular point on a map.
     /// </summary>
     [JsonConverter(typeof(PointConverter))]
+    [GeometryType(GeometryObjectType.Point)]
     public sealed class Point : GeometryObject
     {
         /// <summary>

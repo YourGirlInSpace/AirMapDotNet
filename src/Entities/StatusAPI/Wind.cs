@@ -5,7 +5,7 @@ namespace AirMapDotNet.Entities.StatusAPI
     /// <summary>
     /// Describes current wind conditions.
     /// </summary>
-    public class Wind
+    public sealed class Wind
     {
         /// <summary>
         /// The direction the wind is coming <i>from</i>.

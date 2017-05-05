@@ -1,11 +1,13 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using AirMapDotNet.Entities.GeoJSON.GeoObjects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace AirMapDotNet.Entities.GeoJSON.Converters
 {
-    internal class GeometryConverter : JsonConverter
+    internal sealed class GeometryConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -24,7 +26,7 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             writer.WriteStartObject();
 
             writer.WritePropertyName("type");
-            writer.WriteValue(geom.GeometryType);
+            writer.WriteValue(geom.GeometryType.ToString().ToLowerInvariant());
 
             writer.WritePropertyName("coordinates");
             serializer.Serialize(writer, geom.GeometryObject);
@@ -56,35 +58,22 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             if (coordinatesToken == null)
                 throw new AirMapException("Failed to parse GeoJSON: Token \"coordinates\" does not exist.");
 
-            geom.GeometryType = typeToken.Value<string>();
+            geom.GeometryType = (GeometryObjectType) Enum.Parse(typeof(GeometryObjectType), typeToken.Value<string>(), true);
 
-            // Since the GeoJSON specification is unlikely to change in a long while,
-            // we'll just do it this way.  Yay for laziness!
-            switch (typeToken.Value<string>().ToLowerInvariant())
-            {
-                case "point":
-                    geom.GeometryObject = coordinatesToken.ToObject<Point>();
-                    break;
-                case "multipoint":
-                    geom.GeometryObject = coordinatesToken.ToObject<MultiPoint>();
-                    break;
-                case "linestring":
-                    geom.GeometryObject = coordinatesToken.ToObject<LineString>();
-                    break;
-                case "multilinestring":
-                    geom.GeometryObject = coordinatesToken.ToObject<MultiLineString>();
-                    break;
-                case "polygon":
-                    geom.GeometryObject = coordinatesToken.ToObject<Polygon>();
-                    break;
-                case "multipolygon":
-                    geom.GeometryObject = coordinatesToken.ToObject<MultiPolygon>();
-                    break;
-                case "geometrycollection":
-                    geom.GeometryObject = coordinatesToken.ToObject<GeometryCollection>();
-                    break;
-            }
-
+            /* In plain english:
+             * Search for all objects with the attribute GeometryTypeAttribute,
+             * and select the type with the attribute matching geom.GeometryType,
+             * deserialize the token and assign it to geom.GeometryObject
+             */
+            geom.GeometryObject = (GeometryObject)
+                (
+                    from t in Utilities.GetTypesWithAttribute<GeometryTypeAttribute>()
+                    let objType = t.GetCustomAttribute<GeometryTypeAttribute>(true)
+                    // There should only be one instance of this
+                    where objType.ObjectType == geom.GeometryType
+                    select coordinatesToken.ToObject(t)
+                ).FirstOrDefault();
+            
             return geom;
         }
         

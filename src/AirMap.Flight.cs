@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using System.Web;
-using AirMapDotNet.Entities;
 using AirMapDotNet.Entities.FlightAPI;
 using AirMapDotNet.Entities.GeoJSON;
 using AirMapDotNet.Entities.GeoJSON.GeoObjects;
-using Newtonsoft.Json;
+using AirMapDotNet.Services;
 
 namespace AirMapDotNet
 {
     public partial class AirMap
     {
+        private readonly FlightService _flightService;
+
         /// <summary>
         /// The default maximum limit for requests.
         /// </summary>
@@ -64,15 +63,8 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="AirMapException">If the serialization of <paramref name="geom"/> fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="geom"/> is null.</exception>
-        public async Task<IEnumerable<Flight>> GetFlights(Geometry geom, int limit)
-        {
-            if (geom == null)
-                throw new ArgumentNullException(nameof(geom));
-
-            string geoJson = JsonConvert.SerializeObject(geom);
-
-            return await GetFlights(geoJson, limit, DefaultEnhance);
-        }
+        public Task<IEnumerable<Flight>> GetFlights(Geometry geom, int limit)
+            => _flightService.GetFlights(geom, limit);
 
         /// <summary>
         /// Retrieves a list of all flights within a geographic area.
@@ -83,31 +75,8 @@ namespace AirMapDotNet
         /// <returns>A list of all flights inside the area defined in <paramref name="geoJson"/>.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="geoJson"/> is null or equals <see cref="string.Empty"/>.</exception>
-        public async Task<IEnumerable<Flight>> GetFlights(string geoJson, int limit, bool enhance)
-        {
-            if (string.IsNullOrEmpty(geoJson))
-                throw new ArgumentNullException(nameof(geoJson));
-
-            // Remove the excess crap from the GeoJSON string.
-            geoJson = geoJson.Replace("\r", "");
-            geoJson = geoJson.Replace("\n", "");
-            geoJson = geoJson.Replace(" ", "");
-
-            string geoJsonEncoded = HttpUtility.UrlEncode(geoJson);
-
-            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri("https://api.airmap.com/flight/v2/"));
-            
-            NameValueCollection parms = new NameValueCollection
-            {
-                ["geometry"] = geoJsonEncoded,
-                ["enhance"] = enhance ? "true" : "false",
-                ["limit"] = limit.ToString()
-            };
-
-            PagedEntityCollection<Flight> flightCollection = await GetAsync(flightLink, parms);
-
-            return flightCollection;
-        }
+        public Task<IEnumerable<Flight>> GetFlights(string geoJson, int limit, bool enhance)
+            => _flightService.GetFlights(geoJson, limit, enhance);
 
         /// <summary>
         /// Retrieves a list of all currently active flights within a geographic area.
@@ -151,27 +120,8 @@ namespace AirMapDotNet
         /// <returns>A list of allcurrently active flights in the area defined by <paramref name="geom"/>.</returns>
         /// <exception cref="ArgumentNullException">If <paramref name="geom"/> is null.</exception>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        public async Task<IEnumerable<Flight>> GetCurrentFlights(Geometry geom, int limit, bool enhance)
-        {
-            if (geom == null)
-                throw new ArgumentNullException(nameof(geom));
-
-            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri("https://api.airmap.com/flight/v2/"));
-
-            string geoJsonEncoded = HttpUtility.UrlEncode(JsonConvert.SerializeObject(geom));
-            NameValueCollection parms = new NameValueCollection
-            {
-                ["start_before"] = DateTime.UtcNow.ToString("O"),
-                ["end_after"] = DateTime.UtcNow.ToString("O"),
-                ["geometry"] = geoJsonEncoded,
-                ["enhance"] = enhance ? "true" : "false",
-                ["limit"] = limit.ToString()
-            };
-
-            PagedEntityCollection<Flight> flightCollection = await GetAsync(flightLink, parms);
-
-            return flightCollection;
-        }
+        public Task<IEnumerable<Flight>> GetCurrentFlights(Geometry geom, int limit, bool enhance)
+            => _flightService.GetCurrentFlights(geom, limit, enhance);
 
         /// <summary>
         /// Creates a new flight using the parameters in <see cref="FlightCreationParameters"/>.
@@ -182,36 +132,8 @@ namespace AirMapDotNet
         /// <exception cref="AuthenticationException">If the <see cref="AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
         /// <exception cref="AirMapException">If the <see cref="FlightCreationParameters.Geometry"/> property of <paramref name="creationParams"/> is not a <see cref="LineString"/> or <see cref="Polygon"/>.</exception>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        public async Task<Flight> CreateFlight(FlightCreationParameters creationParams)
-        {
-            if (creationParams == null)
-                throw new ArgumentNullException(nameof(creationParams));
-            if (AuthenticationToken == null)
-                throw new AuthenticationException("Authentication token not set.");
-            if (!AuthenticationToken.IsValid)
-                throw new AuthenticationException("Authentication token has expired.");
-
-            Href<Flight> createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/point"));
-
-            if (creationParams.Geometry != null)
-            {
-                if (creationParams.Geometry.GeometryObject is LineString)
-                    createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/path"));
-                else if (creationParams.Geometry.GeometryObject is Polygon)
-                    createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/polygon"));
-                else
-                    throw new AirMapException("The only accepted geometries are LineString and Polygon!");
-            }
-
-            JsonSerializerSettings jss = new JsonSerializerSettings
-            {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat
-            };
-
-            string json = JsonConvert.SerializeObject(creationParams, jss);
-
-            return await PostAsync(createFlightHref, json);
-        }
+        public Task<Flight> CreateFlight(FlightCreationParameters creationParams)
+            => _flightService.CreateFlight(creationParams);
 
         /// <summary>
         /// Deletes a flight.
@@ -221,12 +143,12 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="AuthenticationException">If the <see cref="AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="flight"/> is null.</exception>
-        public async Task<bool> DeleteFlight(Flight flight)
+        public Task<bool> DeleteFlight(Flight flight)
         {
             if (flight == null)
                 throw new ArgumentNullException(nameof(flight));
 
-            return await DeleteFlight(flight.ID);
+            return DeleteFlight(flight.ID);
         }
 
         /// <summary>
@@ -237,22 +159,8 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="AuthenticationException">If the <see cref="AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="flightId"/> is null.</exception>
-        public async Task<bool> DeleteFlight(string flightId)
-        {
-            if (string.IsNullOrEmpty(flightId))
-                throw new ArgumentNullException(nameof(flightId));
-            if (AuthenticationToken == null)
-                throw new AuthenticationException("Authentication token not set.");
-            if (!AuthenticationToken.IsValid)
-                throw new AuthenticationException("Authentication token has expired.");
-
-            Href<FlightDeletionParameters> deleteHref = new Href<FlightDeletionParameters>(new Uri($"https://api.airmap.com/flight/v2/{flightId}/delete"));
-
-            // Post an empty object.
-            FlightDeletionParameters fdp = await PostAsync(deleteHref, new object());
-
-            return fdp.ID.Equals(flightId, StringComparison.InvariantCulture);
-        }
+        public Task<bool> DeleteFlight(string flightId)
+            => _flightService.DeleteFlight(flightId);
 
         /// <summary>
         /// Ends a flight.
@@ -278,21 +186,7 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="AuthenticationException">If the <see cref="AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="flightId"/> is null.</exception>
-        public async Task<DateTime> EndFlight(string flightId)
-        {
-            if (string.IsNullOrEmpty(flightId))
-                throw new ArgumentNullException(nameof(flightId));
-            if (AuthenticationToken == null)
-                throw new AuthenticationException("Authentication token not set.");
-            if (!AuthenticationToken.IsValid)
-                throw new AuthenticationException("Authentication token has expired.");
-
-            Href<FlightEndParameters> deleteHref = new Href<FlightEndParameters>(new Uri($"https://api.airmap.com/flight/v2/{flightId}/end"));
-
-            // Post an empty object.
-            FlightEndParameters fep = await PostAsync(deleteHref, new object());
-
-            return fep.EndTime;
-        }
+        public Task<DateTime> EndFlight(string flightId)
+            => _flightService.EndFlight(flightId);
     }
 }
