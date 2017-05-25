@@ -55,9 +55,7 @@ namespace AirMapDotNet.Entities.GeoJSON
 
         /// <inheritdoc />
         public override bool Equals(object obj)
-        {
-            return Equals(obj as Position);
-        }
+            => Equals(obj as Position);
 
         /// <inheritdoc />
         public bool Equals(Position other)
@@ -72,7 +70,7 @@ namespace AirMapDotNet.Entities.GeoJSON
         {
             unchecked
             {
-                return ((LatLon?.GetHashCode() ?? 0)*397) ^ Elevation.GetHashCode();
+                return (LatLon?.GetHashCode() ?? 0)*397 ^ Elevation.GetHashCode();
             }
         }
 
@@ -83,9 +81,7 @@ namespace AirMapDotNet.Entities.GeoJSON
         /// <param name="right">The second <see cref="Position"/>.</param>
         /// <returns><b>True</b> if <paramref name="left"/> equals <paramref name="right"/>, otherwise <b>false</b>.</returns>
         public static bool operator ==(Position left, Position right)
-        {
-            return Equals(left, right);
-        }
+            => Equals(left, right);
 
         /// <summary>
         /// Determines whether <paramref name="left"/> is not equal to <paramref name="right"/>.
@@ -94,8 +90,6 @@ namespace AirMapDotNet.Entities.GeoJSON
         /// <param name="right">The second <see cref="Position"/>.</param>
         /// <returns><b>True</b> if <paramref name="left"/> does not equal <paramref name="right"/>, otherwise <b>false</b>.</returns>
         public static bool operator !=(Position left, Position right)
-        {
-            return !Equals(left, right);
-        }
+            => !Equals(left, right);
     }
 }

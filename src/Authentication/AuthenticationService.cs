@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Auth0;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 
@@ -45,7 +46,8 @@ namespace AirMapDotNet.Authentication
                 Connection = DEFAULT_CONNECTION,
                 ClientId = config.ClientID,
                 Username = username,
-                Password = password
+                Password = password,
+                Scope = "openid"
             };
 
             AuthenticationResponse resp;
@@ -69,7 +71,7 @@ namespace AirMapDotNet.Authentication
                 throw new AuthenticationException("Failed to get user information.", ex);
             }
             
-            AuthenticationToken at = new AuthenticationToken(resp.AccessToken, user);
+            AuthenticationToken at = new AuthenticationToken(resp.IdToken, user);
 
             return at;
         }

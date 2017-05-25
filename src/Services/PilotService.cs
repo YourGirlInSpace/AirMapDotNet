@@ -28,12 +28,12 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
-            //if (!AuthenticationToken.IsValid)
-            //    throw new AuthenticationException("Authentication token has expired.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<PilotProfile> profileLink =
                 new Href<PilotProfile>(
-                    new Uri($"https://api.airmap.com/pilot/v2/{AirMap.AuthenticationToken.User.UserID}"));
+                    new Uri(string.Format(AirMap_Pilot_ByID, AirMap.AuthenticationToken.User.UserID)));
 
             return await AirMap.GetAsync(profileLink);
         }
@@ -50,11 +50,13 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (string.IsNullOrEmpty(uid))
                 throw new ArgumentNullException(nameof(uid));
 
-            Href<PilotProfile> profileLink = new Href<PilotProfile>(new Uri($"https://api.airmap.com/pilot/v2/{uid}"));
+            Href<PilotProfile> profileLink = new Href<PilotProfile>(new Uri(string.Format(AirMap_Pilot_ByID, uid)));
 
             return await AirMap.GetAsync(profileLink);
         }
@@ -70,8 +72,10 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
-            Href<PilotProfile> profileLink = new Href<PilotProfile>(new Uri($"https://api.airmap.com/pilot/v2/{upp.ID}"));
+            Href<PilotProfile> profileLink = new Href<PilotProfile>(new Uri(string.Format(AirMap_Pilot_ByID, upp.ID)));
 
             return await AirMap.PatchAsync(profileLink, upp);
         }
@@ -87,6 +91,8 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (profile == null)
                 throw new ArgumentNullException(nameof(profile));
@@ -104,9 +110,11 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<EmptyEntity> verificationLink =
-                new Href<EmptyEntity>(new Uri($"https://api.airmap.com/pilot/v2/{uid}/phone/send_token"));
+                new Href<EmptyEntity>(new Uri(string.Format(AirMap_Pilot_ByID_Phone_SendToken, uid)));
 
             await AirMap.PostAsync(verificationLink, new ExpandoObject());
         }
@@ -124,6 +132,8 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (profile == null)
                 throw new ArgumentNullException(nameof(profile));
@@ -143,9 +153,11 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<VerificationStatus> verificationLink =
-                new Href<VerificationStatus>(new Uri($"https://api.airmap.com/pilot/v2/{uid}/phone/verify_token"));
+                new Href<VerificationStatus>(new Uri(string.Format(AirMap_Pilot_ByID_Phone_VerifyToken, uid)));
 
             dynamic postObject = new ExpandoObject();
             postObject.token = token;
@@ -166,10 +178,12 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<EntityCollection<Aircraft>> getPilotAircraftLink =
                 new Href<EntityCollection<Aircraft>>(
-                    new Uri($"https://api.airmap.com/pilot/v2/{AirMap.AuthenticationToken.User.UserID}/aircraft"));
+                    new Uri(string.Format(AirMap_Pilot_ByID_Aircraft, AirMap.AuthenticationToken.User.UserID)));
 
             EntityCollection<Aircraft> aircraft = await AirMap.GetAsync(getPilotAircraftLink);
 
@@ -189,6 +203,8 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
@@ -208,10 +224,12 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<Aircraft> addPilotAircraftLink =
                 new Href<Aircraft>(
-                    new Uri($"https://api.airmap.com/pilot/v2/{AirMap.AuthenticationToken.User.UserID}/aircraft"));
+                    new Uri(string.Format(AirMap_Pilot_ByID_Aircraft, AirMap.AuthenticationToken.User.UserID)));
 
             dynamic postObject = new ExpandoObject();
             postObject.model_id = model;
@@ -232,6 +250,8 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (aircraft == null)
                 throw new ArgumentNullException(nameof(aircraft));
@@ -250,11 +270,13 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href<EmptyEntity> pilotAircraftLink =
                 new Href<EmptyEntity>(
                     new Uri(
-                        $"https://api.airmap.com/pilot/v2/{AirMap.AuthenticationToken.User.UserID}/aircraft/{aircraftId}"));
+                        string.Format(AirMap_Pilot_ByID_Aircraft_ByID, AirMap.AuthenticationToken.User.UserID, aircraftId)));
 
             dynamic patchObject = new ExpandoObject();
             patchObject.nickname = nickname;
@@ -273,6 +295,8 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             if (aircraft == null)
                 throw new ArgumentNullException(nameof(aircraft));
@@ -290,11 +314,13 @@ namespace AirMapDotNet.Services
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
             Href pilotAircraftLink =
                 new Href(
                     new Uri(
-                        $"https://api.airmap.com/pilot/v2/{AirMap.AuthenticationToken.User.UserID}/aircraft/{aircraftId}"));
+                        string.Format(AirMap_Pilot_ByID_Aircraft_ByID, AirMap.AuthenticationToken.User.UserID, aircraftId)));
 
             await AirMap.DeleteAsync(pilotAircraftLink);
         }

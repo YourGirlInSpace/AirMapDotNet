@@ -27,7 +27,7 @@ namespace AirMapDotNet.Services
         public async Task<IEnumerable<Manufacturer>> GetManufacturers()
         {
             Href<EntityCollection<Manufacturer>> manufacturerLink =
-                new Href<EntityCollection<Manufacturer>>(new Uri("https://api.airmap.com/aircraft/v2/manufacturer"));
+                new Href<EntityCollection<Manufacturer>>(new Uri(AirMap_Aircraft_Manufacturers));
 
             EntityCollection<Manufacturer> manuCollection = await AirMap.GetAsync(manufacturerLink);
 
@@ -62,7 +62,7 @@ namespace AirMapDotNet.Services
                 throw new ArgumentNullException(nameof(manufacturerID), "Must have at least one parameter declared.");
 
             Href<EntityCollection<Model>> modelLink =
-                new Href<EntityCollection<Model>>(new Uri("https://api.airmap.com/aircraft/v2/model"));
+                new Href<EntityCollection<Model>>(new Uri(AirMap_Aircraft_Models));
 
             NameValueCollection query = new NameValueCollection();
 
@@ -102,7 +102,7 @@ namespace AirMapDotNet.Services
                 throw new ArgumentNullException(nameof(manufacturer));
 
             Href<EntityCollection<Model>> modelLink =
-                new Href<EntityCollection<Model>>(new Uri("https://api.airmap.com/aircraft/v2/model"));
+                new Href<EntityCollection<Model>>(new Uri(AirMap_Aircraft_Models));
 
             NameValueCollection query = new NameValueCollection
             {
@@ -133,7 +133,7 @@ namespace AirMapDotNet.Services
             if (string.IsNullOrEmpty(modelId))
                 throw new ArgumentNullException(nameof(modelId));
 
-            Href<Model> modelLink = new Href<Model>(new Uri("https://api.airmap.com/aircraft/v2/model/" + modelId));
+            Href<Model> modelLink = new Href<Model>(new Uri(string.Format(AirMap_Aircraft_Model, modelId)));
 
             return await AirMap.GetAsync(modelLink);
         }
