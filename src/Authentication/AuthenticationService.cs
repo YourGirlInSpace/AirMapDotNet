@@ -27,6 +27,24 @@ namespace AirMapDotNet.Authentication
         /// <summary>
         /// Attempts to log in via the AirMap SSO.
         /// </summary>
+        /// <param name="airmap">The AirMap instance to use.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>A <see cref="AuthenticationToken"/> if authentication was successful.</returns>
+        /// <exception cref="AuthenticationException">If authentication was unsuccessful or user data was not available.</exception>
+        /// <exception cref="AuthenticationException">If the <see cref="APIConfiguration.ClientID"/> property was not set.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="airmap"/> is null.</exception>
+        public static Task<AuthenticationToken> LoginAsync(AirMap airmap, string username, string password)
+        {
+            if (airmap == null)
+                throw new ArgumentNullException(nameof(airmap));
+
+            return LoginAsync(airmap.Config, username, password);
+        }
+
+        /// <summary>
+        /// Attempts to log in via the AirMap SSO.
+        /// </summary>
         /// <param name="config">The API configuration to use.</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
