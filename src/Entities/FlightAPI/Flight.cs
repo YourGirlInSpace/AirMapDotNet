@@ -91,7 +91,7 @@ namespace AirMapDotNet.Entities.FlightAPI
         [JsonProperty("public")]
         public bool IsPublic { get; internal set; }
 
-        // TODO: Ask about this
+        // Related to flight permits by an ATC facility
         /// <summary>
         /// NFC
         /// </summary>

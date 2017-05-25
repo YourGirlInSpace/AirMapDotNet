@@ -37,7 +37,8 @@ namespace AirMapDotNet.Entities.StatusAPI
         /// A list of all <see cref="AirspaceObject"/>s intersecting the proposed flight.
         /// </summary>
         [JsonProperty("advisories")]
-        public Collection<AirspaceObject> Advisories { get; } = new Collection<AirspaceObject>();
+        public Collection<AirspaceObject> Advisories { get; }
+            = new Collection<AirspaceObject>();
 
         /// <summary>
         /// A <see cref="Weather"/> object containing current weather conditions.

@@ -66,7 +66,7 @@ namespace AirMapDotNet.Services
 
             string geoJsonEncoded = HttpUtility.UrlEncode(geoJson);
 
-            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri("https://api.airmap.com/flight/v2/"));
+            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
 
             NameValueCollection parms = new NameValueCollection
             {
@@ -94,7 +94,7 @@ namespace AirMapDotNet.Services
             if (geom == null)
                 throw new ArgumentNullException(nameof(geom));
 
-            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri("https://api.airmap.com/flight/v2/"));
+            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
 
             string geoJsonEncoded = HttpUtility.UrlEncode(JsonConvert.SerializeObject(geom));
             NameValueCollection parms = new NameValueCollection
@@ -126,17 +126,17 @@ namespace AirMapDotNet.Services
                 throw new ArgumentNullException(nameof(creationParams));
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
-            //if (!AuthenticationToken.IsValid)
-            //    throw new AuthenticationException("Authentication token has expired.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
-            Href<Flight> createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/point"));
+            Href<Flight> createFlightHref = new Href<Flight>(new Uri(AirMap_Flight_Point));
 
             if (creationParams.Geometry != null)
             {
                 if (creationParams.Geometry.GeometryObject is LineString)
-                    createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/path"));
+                    createFlightHref = new Href<Flight>(new Uri(AirMap_Flight_Path));
                 else if (creationParams.Geometry.GeometryObject is Polygon)
-                    createFlightHref = new Href<Flight>(new Uri("https://api.airmap.com/flight/v2/polygon"));
+                    createFlightHref = new Href<Flight>(new Uri(AirMap_Flight_Polygon));
                 else
                     throw new AirMapException("The only accepted geometries are LineString and Polygon!");
             }
@@ -165,10 +165,11 @@ namespace AirMapDotNet.Services
                 throw new ArgumentNullException(nameof(flightId));
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
-            //if (!AuthenticationToken.IsValid)
-            //    throw new AuthenticationException("Authentication token has expired.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
-            Href<FlightDeletionParameters> deleteHref = new Href<FlightDeletionParameters>(new Uri($"https://api.airmap.com/flight/v2/{flightId}/delete"));
+
+            Href<FlightDeletionParameters> deleteHref = new Href<FlightDeletionParameters>(new Uri(string.Format(AirMap_Flight_DeleteByID, flightId)));
 
             // Post an empty object.
             FlightDeletionParameters fdp = await AirMap.PostAsync(deleteHref, new object());
@@ -190,10 +191,10 @@ namespace AirMapDotNet.Services
                 throw new ArgumentNullException(nameof(flightId));
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
-            //if (!AuthenticationToken.IsValid)
-            //    throw new AuthenticationException("Authentication token has expired.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
 
-            Href<FlightEndParameters> deleteHref = new Href<FlightEndParameters>(new Uri($"https://api.airmap.com/flight/v2/{flightId}/end"));
+            Href<FlightEndParameters> deleteHref = new Href<FlightEndParameters>(new Uri(string.Format(AirMap_Flight_EndByID, flightId)));
 
             // Post an empty object.
             FlightEndParameters fep = await AirMap.PostAsync(deleteHref, new object());

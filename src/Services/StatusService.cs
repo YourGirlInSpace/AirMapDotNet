@@ -35,7 +35,7 @@ namespace AirMapDotNet.Services
             if (buffer < 0 || buffer > 10000)
                 throw new ArgumentOutOfRangeException(nameof(buffer), $"{nameof(buffer)} must be between 0 and 10000.");
 
-            Href<Status> statusLink = new Href<Status>(new Uri("https://api.airmap.com/status/v2/point/"));
+            Href<Status> statusLink = new Href<Status>(new Uri(AirMap_Status_ByPoint));
 
             NameValueCollection parms = new NameValueCollection
             {
@@ -69,9 +69,9 @@ namespace AirMapDotNet.Services
             Href<Status> statusLink;
 
             if (geom.GeometryObject is LineString)
-                statusLink = new Href<Status>(new Uri("https://api.airmap.com/status/v2/path/"));
+                statusLink = new Href<Status>(new Uri(AirMap_Status_ByPath));
             else if (geom.GeometryObject is Polygon)
-                statusLink = new Href<Status>(new Uri("https://api.airmap.com/status/v2/polygon/"));
+                statusLink = new Href<Status>(new Uri(AirMap_Status_ByPolygon));
             else throw new AirMapException("The only accepted geometries are LineString and Polygon!");
 
             NameValueCollection parms = new NameValueCollection

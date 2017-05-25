@@ -23,9 +23,7 @@ namespace AirMapDotNet.Entities.GeoJSON
 
         /// <inheritdoc />
         public override bool Equals(object obj)
-        {
-            return Equals(obj as BoundingBox);
-        }
+            => Equals(obj as BoundingBox);
 
         /// <inheritdoc />
         public bool Equals(BoundingBox other)
@@ -40,7 +38,7 @@ namespace AirMapDotNet.Entities.GeoJSON
         {
             unchecked
             {
-                return ((SouthWest?.GetHashCode() ?? 0)*397) ^ (NorthEast?.GetHashCode() ?? 0);
+                return (SouthWest?.GetHashCode() ?? 0)*397 ^ (NorthEast?.GetHashCode() ?? 0);
             }
         }
 
@@ -51,9 +49,7 @@ namespace AirMapDotNet.Entities.GeoJSON
         /// <param name="right">The second <see cref="BoundingBox"/>.</param>
         /// <returns><b>True</b> if <paramref name="left"/> equals <paramref name="right"/>, otherwise <b>false</b>.</returns>
         public static bool operator ==(BoundingBox left, BoundingBox right)
-        {
-            return Equals(left, right);
-        }
+            => Equals(left, right);
 
         /// <summary>
         /// Determines whether <paramref name="left"/> is not equal to <paramref name="right"/>.
@@ -62,8 +58,6 @@ namespace AirMapDotNet.Entities.GeoJSON
         /// <param name="right">The second <see cref="BoundingBox"/>.</param>
         /// <returns><b>True</b> if <paramref name="left"/> does not equal <paramref name="right"/>, otherwise <b>false</b>.</returns>
         public static bool operator !=(BoundingBox left, BoundingBox right)
-        {
-            return !Equals(left, right);
-        }
+            => !Equals(left, right);
     }
 }
