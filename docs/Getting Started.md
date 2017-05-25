@@ -33,10 +33,15 @@ nuget install AirMapDotNet
 
 ### Test the SDK
 
-Create a new `AirMap` object and try the following code:
+First, download the `airmap.config.json` file from your dashboard and place it in the project's working directory.
+
+Then, load the file using `APIConfiguration.LoadFromFileAsync`.
+
+Finally, create a new `AirMap` instance with the configuration and explore to your heart's content!
 
 ```CSharp
-AirMap am = new AirMap(AIRMAP_API_KEY);
+APIConfiguration config = await APIConfiguration.LoadFromFileAsync("airmap.config.json");
+AirMap am = new AirMap(config);
 
 Manufacturers[] manus = await am.GetManufacturers();
 ```

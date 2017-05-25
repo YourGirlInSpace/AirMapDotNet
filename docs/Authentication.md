@@ -3,39 +3,51 @@ Authentication
 
 Certain requests to the AirMap API requires authorization through the use of an `AuthenticationToken`.  That is, the user must have granted permission for an application to access the requested data.  To prove that the user has granted permission, the request header sent by the application must include a valid access token.
 
-Authentication tokens may be acquired through an Auth0 library, or through the official [js-auth](https://github.com/airmap/js-auth) provided by the AirMap team.
-
-An Authentication Token is a standard [JWT](https://jwt.io) with the following payload:
-
-```JSON
-{
-  "iss": "https://sso.airmap.io/",
-  "sub": "auth0|58...5c",
-  "aud": "OP...xF",
-  "exp": 1492151724,
-  "iat": 1492115724
-}
-```
-
-The parameters of the payload are as follows:
-
-| Parameter | Name          | Description                                                                  |
-|-----------|---------------|------------------------------------------------------------------------------|
-| iss       | Issuer        | The issuer of the authentication token.  Always `https://sso.airmap.io`      |
-| sub       | Subject       | The user ID.                                                                 |
-| aud       | Audience      | The client ID that the token is valid for.                                   |
-| exp       | Expiry Time   | The time the authentication token expires.                                   |
-| iat       | Issuance Time | The time the authentication token was issued.                                |
-
-Once you have acquired an AuthenticationToken through [Auth0](https://auth0.com/) or the [js-auth](https://github.com/airmap/js-auth) library, you may use it in the AirMapDotNet SDK:
+Authentication tokens may be acquired through the `AuthenticationService` class using the `LoginAsync` method, and providing an `AirMap` instance, a username and a password.
 
 ```CSharp
-AuthenticationToken at = new AuthenticationToken("eyJ...w28");
-
-airmap_inst.AuthenticationToken = at;
+AuthenticationToken at = await AuthenticationService.LoginAsync(am, username, password);
 ```
 
-To check whether the AuthenticationToken has expired, use the `IsValid` property.
+A token may also be created using an `APIConfiguration` instance:
+
+```CSharp
+AuthenticationToken at = await AuthenticationService.LoginAsync(apiConfig, username, password);
+```
+
+Or, a token may be created with an ID token acquired through alternate means:
+
+```CSharp
+AuthenticationToken at = new AuthenticationToken(id_token);
+```
+
+This token may then be used in the `AirMap` instance by assigning it to the instance's `AuthenticationToken` property:
+
+```CSharp
+AirMap am = new AirMap(...);
+
+am.AuthenticationToken = at;
+```
+
+To check whether the AuthenticationToken has expired, use the `IsValid` property:
+
+```CSharp
+if (!am.AuthenticationToken.IsValid)
+   // Make the user log back in
+```
+
+### Authentication Errors
+
+Authentication problems can arise in many AirMap endpoints.  All authentication errors are encapsulated with the `AuthenticationException` class, which contains information about the cause of the error.
+
+The three causes of authentication errors during login are:
+ - The client ID is unavailable
+ - The user credentials were incorrect
+ - A request for user information failed
+ 
+The two main causes of authentication errors during runtime are:
+ - The `AuthenticationToken` property on the `AirMap` instance has been unset
+ - The token is no longer valid
 
 ### AuthenticationToken Properties
 
@@ -46,5 +58,6 @@ To check whether the AuthenticationToken has expired, use the `IsValid` property
 | Audience  | The client ID that the token is valid for.                                   |
 | Expiry    | The time the authentication token expires.                                   |
 | IssuedAt  | The time the authentication token was issued.                                |
-| IsValid   | *true* if the current time is between IssuedAt and Expiry.                   |
+| IsValid   | *true* if the current time is between `IssuedAt` and `Expiry`.               |
 | Token     | The raw ID token.                                                            |
+| User      | Details about the user account behind the `AuthenticationToken`              |
