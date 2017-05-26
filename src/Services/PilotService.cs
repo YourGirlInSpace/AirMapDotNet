@@ -68,14 +68,14 @@ namespace AirMapDotNet.Services
         /// <returns>The updated profile.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="AuthenticationException">If the <see cref="AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
-        internal async Task<PilotProfile> UpdateProfile(UpdatePilotProfile upp)
+        internal async Task<UpdatePilotProfile> UpdateProfile(UpdatePilotProfile upp)
         {
             if (AirMap.AuthenticationToken == null)
                 throw new AuthenticationException("Authentication token not set.");
             if (!AirMap.AuthenticationToken.IsValid)
                 throw new AuthenticationException("Authentication token has expired.");
 
-            Href<PilotProfile> profileLink = new Href<PilotProfile>(new Uri(string.Format(AirMap_Pilot_ByID, upp.ID)));
+            Href<UpdatePilotProfile> profileLink = new Href<UpdatePilotProfile>(new Uri(string.Format(AirMap_Pilot_ByID, upp.ID)));
 
             return await AirMap.PatchAsync(profileLink, upp);
         }

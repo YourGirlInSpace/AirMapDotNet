@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace AirMapDotNet.Entities
 {
@@ -8,9 +9,11 @@ namespace AirMapDotNet.Entities
     public class AirMapEntity : IAirMapEntity
     {
         /// <inheritdoc />
+        [JsonIgnore]
         public virtual AirMap AirMap { get; set; }
 
         /// <inheritdoc />
+        [JsonIgnore]
         public virtual DateTime RequestTime { get; set; }
     }
 }

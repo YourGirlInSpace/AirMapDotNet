@@ -27,6 +27,24 @@ namespace AirMapDotNet.Services
         private const bool DefaultEnhance = false;
 
         /// <summary>
+        /// Retrieves flight by its ID.
+        /// </summary>
+        /// <param name="id">The flight's unique ID.</param>
+        /// <param name="enhance">If <b>true</b>, the response will populate detailed fields such as <i>aircraft</i> or <i>pilot</i>.</param>
+        /// <returns>The flight with the ID <paramref name="id"/>.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="id"/> is null.</exception>
+        internal async Task<Flight> GetFlight(string id, bool enhance)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id));
+
+            Href<Flight> flightLink = new Href<Flight>(new Uri(string.Format(AirMap_Flight_ByID, id) + (enhance ? "?enhance=true" : "")));
+            
+            return await AirMap.GetAsync(flightLink);
+        }
+
+        /// <summary>
         /// Retrieves a list of all flights within a geographic area.
         /// </summary>
         /// <param name="geom">A bounding geometry.</param>
@@ -86,7 +104,7 @@ namespace AirMapDotNet.Services
         /// <param name="geom">The geographic area to search.</param>
         /// <param name="limit">The maximum amount of flights to return.</param>
         /// <param name="enhance">If <b>true</b>, the returned data will be enhanced with extra information.</param>
-        /// <returns>A list of allcurrently active flights in the area defined by <paramref name="geom"/>.</returns>
+        /// <returns>A list of all currently active flights in the area defined by <paramref name="geom"/>.</returns>
         /// <exception cref="ArgumentNullException">If <paramref name="geom"/> is null.</exception>
         /// <exception cref="AirMapException">If the request fails.</exception>
         internal async Task<IEnumerable<Flight>> GetCurrentFlights(Geometry geom, int limit, bool enhance)
@@ -102,6 +120,35 @@ namespace AirMapDotNet.Services
                 ["start_before"] = DateTime.UtcNow.ToString("O"),
                 ["end_after"] = DateTime.UtcNow.ToString("O"),
                 ["geometry"] = geoJsonEncoded,
+                ["enhance"] = enhance ? "true" : "false",
+                ["limit"] = limit.ToString()
+            };
+
+            PagedEntityCollection<Flight> flightCollection = await AirMap.GetAsync(flightLink, parms);
+
+            return flightCollection;
+        }
+
+        /// <summary>
+        /// Retrieves a list of all flights created by the currently authenticated user.
+        /// </summary>
+        /// <param name="limit">The maximum amount of flights to return.</param>
+        /// <param name="enhance">If <b>true</b>, the returned data will be enhanced with extra information.</param>
+        /// <returns>A list of all flights created by the currently authenticated user.</returns>
+        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        internal async Task<IEnumerable<Flight>> GetMyFlights(int limit, bool enhance)
+        {
+            if (AirMap.AuthenticationToken == null)
+                throw new AuthenticationException("Authentication token not set.");
+            if (!AirMap.AuthenticationToken.IsValid)
+                throw new AuthenticationException("Authentication token has expired.");
+
+            Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
+            
+            NameValueCollection parms = new NameValueCollection
+            {
+                ["pilot_id"] = AirMap.AuthenticationToken.User.UserID,
                 ["enhance"] = enhance ? "true" : "false",
                 ["limit"] = limit.ToString()
             };
@@ -141,14 +188,7 @@ namespace AirMapDotNet.Services
                     throw new AirMapException("The only accepted geometries are LineString and Polygon!");
             }
 
-            JsonSerializerSettings jss = new JsonSerializerSettings
-            {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat
-            };
-
-            string json = JsonConvert.SerializeObject(creationParams, jss);
-
-            return await AirMap.PostAsync(createFlightHref, json);
+            return await AirMap.PostAsync(createFlightHref, creationParams);
         }
 
         /// <summary>
@@ -169,12 +209,17 @@ namespace AirMapDotNet.Services
                 throw new AuthenticationException("Authentication token has expired.");
 
 
-            Href<FlightDeletionParameters> deleteHref = new Href<FlightDeletionParameters>(new Uri(string.Format(AirMap_Flight_DeleteByID, flightId)));
+            Href<EmptyEntity> deleteHref = new Href<EmptyEntity>(new Uri(string.Format(AirMap_Flight_DeleteByID, flightId)));
 
             // Post an empty object.
-            FlightDeletionParameters fdp = await AirMap.PostAsync(deleteHref, new object());
-
-            return fdp.ID.Equals(flightId, StringComparison.InvariantCulture);
+            try
+            {
+                await AirMap.PostAsync(deleteHref, new object());
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
