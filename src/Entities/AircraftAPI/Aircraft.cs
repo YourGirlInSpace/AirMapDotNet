@@ -27,5 +27,11 @@ namespace AirMapDotNet.Entities.AircraftAPI
         /// </summary>
         [JsonProperty("model")]
         public Model Model { get; internal set; }
+
+        /// <summary>
+        /// The time this aircraft was created.
+        /// </summary>
+        [JsonProperty("created_at")]
+        public System.DateTime CreatedAt { get; internal set; }
     }
 }

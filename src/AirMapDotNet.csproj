@@ -212,23 +212,12 @@
     <Compile Include="Services\IAirMapService.cs" />
     <Compile Include="Services\PilotService.cs" />
     <Compile Include="Services\StatusService.cs" />
-    <Compile Include="URLs.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>URLs.resx</DependentUpon>
-    </Compile>
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AirMapDotNet.ruleset" />
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="URLs.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>URLs.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

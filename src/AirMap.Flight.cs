@@ -23,6 +23,27 @@ namespace AirMapDotNet
         private const bool DefaultEnhance = false;
 
         /// <summary>
+        /// Retrieves flight by its ID.
+        /// </summary>
+        /// <param name="id">The flight's unique ID.</param>
+        /// <returns>The flight with the ID <paramref name="id"/>.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="id"/> is null.</exception>
+        public Task<Flight> GetFlight(string id)
+            => GetFlight(id, DefaultEnhance);
+
+        /// <summary>
+        /// Retrieves flight by its ID.
+        /// </summary>
+        /// <param name="id">The flight's unique ID.</param>
+        /// <param name="enhance">If <b>true</b>, the response will populate detailed fields such as <i>aircraft</i> or <i>pilot</i>.</param>
+        /// <returns>The flight with the ID <paramref name="id"/>.</returns>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="id"/> is null.</exception>
+        public async Task<Flight> GetFlight(string id, bool enhance)
+            => await _flightService.GetFlight(id, enhance);
+
+        /// <summary>
         /// Retrieves a list of all flights within a geographic area.
         /// </summary>
         /// <param name="geoJson">A description of the area to request in <a href="http://geojson.org/">GeoJSON</a> format.</param>
@@ -122,6 +143,46 @@ namespace AirMapDotNet
         /// <exception cref="AirMapException">If the request fails.</exception>
         public Task<IEnumerable<Flight>> GetCurrentFlights(Geometry geom, int limit, bool enhance)
             => _flightService.GetCurrentFlights(geom, limit, enhance);
+
+        /// <summary>
+        /// Retrieves a list of all flights created by the currently authenticated user.
+        /// </summary>
+        /// <returns>A list of all flights created by the currently authenticated user.</returns>
+        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        public Task<IEnumerable<Flight>> GetMyFlights()
+            => _flightService.GetMyFlights(DefaultLimit, DefaultEnhance);
+
+        /// <summary>
+        /// Retrieves a list of all flights created by the currently authenticated user.
+        /// </summary>
+        /// <param name="limit">The maximum amount of flights to return.</param>
+        /// <returns>A list of all flights created by the currently authenticated user.</returns>
+        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        public Task<IEnumerable<Flight>> GetMyFlights(int limit)
+            => _flightService.GetMyFlights(limit, DefaultEnhance);
+
+        /// <summary>
+        /// Retrieves a list of all flights created by the currently authenticated user.
+        /// </summary>
+        /// <param name="enhance">If <b>true</b>, the returned data will be enhanced with extra information.</param>
+        /// <returns>A list of all flights created by the currently authenticated user.</returns>
+        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        public Task<IEnumerable<Flight>> GetMyFlights(bool enhance)
+            => _flightService.GetMyFlights(DefaultLimit, enhance);
+
+        /// <summary>
+        /// Retrieves a list of all flights created by the currently authenticated user.
+        /// </summary>
+        /// <param name="limit">The maximum amount of flights to return.</param>
+        /// <param name="enhance">If <b>true</b>, the returned data will be enhanced with extra information.</param>
+        /// <returns>A list of all flights created by the currently authenticated user.</returns>
+        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        public Task<IEnumerable<Flight>> GetMyFlights(int limit, bool enhance)
+            => _flightService.GetMyFlights(limit, enhance);
 
         /// <summary>
         /// Creates a new flight using the parameters in <see cref="FlightCreationParameters"/>.

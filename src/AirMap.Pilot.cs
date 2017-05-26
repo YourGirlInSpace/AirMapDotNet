@@ -37,7 +37,7 @@ namespace AirMapDotNet
         /// <param name="upp">The parameters to update.</param>
         /// <returns>The updated profile.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        public Task<PilotProfile> UpdateProfile(UpdatePilotProfile upp)
+        public Task<UpdatePilotProfile> UpdateProfile(UpdatePilotProfile upp)
             => _pilotService.UpdateProfile(upp);
 
         /// <summary>

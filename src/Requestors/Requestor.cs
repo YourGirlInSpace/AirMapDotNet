@@ -118,7 +118,13 @@ namespace AirMapDotNet.Requestors
 
             try
             {
-                return JsonConvert.SerializeObject(data);
+                JsonSerializerSettings settings = new JsonSerializerSettings()
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    //Formatting = Formatting.Indented
+                };
+
+                return JsonConvert.SerializeObject(data, settings);
             }
             catch (JsonSerializationException jsx)
             {

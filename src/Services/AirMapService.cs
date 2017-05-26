@@ -93,27 +93,27 @@
         /// <summary>
         /// Resource location for a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID = AirMap_Pilot_BaseURL + "{0}/";
+        protected const string AirMap_Pilot_ByID = AirMap_Pilot_BaseURL + "{0}";
         /// <summary>
         /// Resource location for all aircraft owned by a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID_Aircraft = AirMap_Pilot_ByID + "aircraft/";
+        protected const string AirMap_Pilot_ByID_Aircraft = AirMap_Pilot_ByID + "/aircraft";
         /// <summary>
         /// Resource location for a particular aircraft owned by a particular pilot.  {0} = Pilot ID.  {1} = Aircraft ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID_Aircraft_ByID = AirMap_Pilot_ByID_Aircraft + "{1}/";
+        protected const string AirMap_Pilot_ByID_Aircraft_ByID = AirMap_Pilot_ByID_Aircraft + "/{1}/";
         /// <summary>
         /// Base URL for phone operations for a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID_Phone = AirMap_Pilot_ByID + "phone/";
+        protected const string AirMap_Pilot_ByID_Phone = AirMap_Pilot_ByID + "/phone";
         /// <summary>
         /// Resource location to send a verification token to a particular pilot's phone.  {0} = Pilot ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID_Phone_SendToken = AirMap_Pilot_ByID_Phone + "send_token/";
+        protected const string AirMap_Pilot_ByID_Phone_SendToken = AirMap_Pilot_ByID_Phone + "/send_token";
         /// <summary>
         /// Resource location to verify a token previously sent to a particular pilot's phone.  {0} = Pilot ID.
         /// </summary>
-        protected const string AirMap_Pilot_ByID_Phone_VerifyToken = AirMap_Pilot_ByID_Phone + "verify_token/";
+        protected const string AirMap_Pilot_ByID_Phone_VerifyToken = AirMap_Pilot_ByID_Phone + "/verify_token";
         #endregion
 
         #region Status SDK

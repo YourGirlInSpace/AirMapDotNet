@@ -17,7 +17,7 @@ namespace AirMapDotNet.Authentication
         private const string AIRMAP_SSO_DOMAIN = "sso.airmap.io";
 
         /// <summary>
-        /// The default connection used for <see cref="LoginAsync"/>.
+        /// The default connection used for <see cref="LoginAsync(AirMap, string, string)"/> .
         /// </summary>
         private const string DEFAULT_CONNECTION = "Username-Password-Authentication";
         

@@ -310,6 +310,7 @@ namespace AirMapDotNet.Requestors
 
             string jsonData = SerializeJSON(data);
             req.Content = new StringContent(jsonData);
+            req.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             HttpResponseMessage hrm = await Client.Value.SendAsync(req);
 
@@ -427,6 +428,7 @@ namespace AirMapDotNet.Requestors
 
             string jsonData = SerializeJSON(data);
             req.Content = new StringContent(jsonData);
+            req.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             HttpResponseMessage hrm = await Client.Value.SendAsync(req);
 
