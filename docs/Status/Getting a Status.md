@@ -14,7 +14,7 @@ The Status API will provide you with a list of any `AirspaceObject` that interse
 
 ### Point/Radius Flight Area
 ```CSharp
-AirMap am = new AirMap(AIRMAP_API_KEY);
+AirMap am = new AirMap(...);
 
 // Gets the status of a flight area around <33.553928, -117.717091> with a radius of 250 meters
 Status status = am.GetStatus(33.553928, -117.717091, 250);
@@ -22,9 +22,15 @@ Status status = am.GetStatus(33.553928, -117.717091, 250);
 
 ### LineString Geometry
 ```CSharp
-AirMap am = new AirMap(AIRMAP_API_KEY);
+AirMap am = new AirMap(...);
 
-Geometry path = Utilities.CreatePath(new LatLon(33.553928, -117.717091), new LatLon(33.557054, -117.713874), new LatLon(33.558606, -117.719524));
+LatLon[] points = {
+    new LatLon(33.553928, -117.717091),
+    new LatLon(33.557054, -117.713874),
+    new LatLon(33.558606, -117.719524)
+};
+
+Geometry path = GeoUtilities.CreatePath(points);
 
 // Gets the status of a flight area around the described path, within a distance of 100 meters from the line.
 Status status = am.GetStatus(path, 100);
@@ -32,7 +38,7 @@ Status status = am.GetStatus(path, 100);
 
 ### Polygon Geometry
 ```CSharp
-AirMap am = new AirMap(AIRMAP_API_KEY);
+AirMap am = new AirMap(...);
 
 Geometry poly = GeoUtilities.CreateRectangle(new LatLon(33.558490, -117.721603), new LatLon(33.549965, -117.709821));
 
