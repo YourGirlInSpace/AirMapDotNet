@@ -19,7 +19,7 @@ The `Weather` object exposes the following properties:
 
 ### Point/Radius Flight Area with Weather
 ```CSharp
-AirMap am = new AirMap(AIRMAP_API_KEY);
+AirMap am = new AirMap(...);
 
 // Gets the status of a flight area around <33.553928, -117.717091> with a radius of 250 meters
 Status status = am.GetStatus(33.553928, -117.717091, 250, true);

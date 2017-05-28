@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using AirMapDotNet.Entities.GeoJSON;
 using AirMapDotNet.Entities.GeoJSON.GeoObjects;
+using System.Collections.Generic;
 
 namespace AirMapDotNet
 {
@@ -109,17 +110,28 @@ namespace AirMapDotNet
         /// <exception cref="ArgumentNullException">If <paramref name="points"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">If <paramref name="points"/> contains less than 2 elements.</exception>
         public static Geometry CreatePath(params LatLon[] points)
+            => CreatePath(points);
+
+        /// <summary>
+        /// Creates a new path (a <see cref="LineString"/>) from a list of <see cref="LatLon" /> points.
+        /// </summary>
+        /// <param name="points">The points comprising the path.</param>
+        /// <returns>A <see cref="Geometry"/> with a <see cref="LineString"/> feature.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="points"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">If <paramref name="points"/> contains less than 2 elements.</exception>
+        public static Geometry CreatePath(IEnumerable<LatLon> points)
         {
             if (points == null)
                 throw new ArgumentNullException(nameof(points));
-            if (points.Length < 2)
-                throw new ArgumentOutOfRangeException(nameof(points), $"{nameof(points)} must have at least 2 elements.");
 
             Geometry geom = new Geometry { GeometryType = GeometryObjectType.LineString };
             
             LineString ls = new LineString();
             foreach (LatLon pt in points)
                 ls.Points.Add(new Position(pt));
+
+            if (ls.Points.Count < 2)
+                throw new ArgumentOutOfRangeException(nameof(points), $"{nameof(points)} must have at least 2 elements.");
 
             geom.GeometryObject = ls;
 
