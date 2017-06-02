@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/AirMapDotNet.Explorables/DebugData.Designer.cs
+/src/AirMapDotNet.Explorables/airmap.config.json

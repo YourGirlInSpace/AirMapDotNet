@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AirMapDotNet</id>
+    <version>1.0.3.2</version>
+    <authors>Zazzmatazz</authors>
+    <owners>Zazzmatazz</owners>
+    <licenseUrl>https://github.com/Zazzmatazz/AirMapDotNet/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Zazzmatazz/AirMapDotNet</projectUrl>
+    <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/NuGet_project_logo.svg/1200px-NuGet_project_logo.svg.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET SDK for the AirMap API.</description>
+    <releaseNotes>Release 1.0.3.2</releaseNotes>
+    <copyright>Copyright (c) Zazzmatazz 2017</copyright>
+    <tags>dotnet airmap drone api sdk</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="10.0.2" />
+      <dependency id="Auth0.Core" version="3.6.0" />
+      <dependency id="Auth0.AuthenticationApi" version="3.6.0" />
+      <dependency id="Auth0.ManagementApi" version="3.6.0" />
+    </dependencies>
+  </metadata>
+</package>
