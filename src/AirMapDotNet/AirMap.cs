@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities;
@@ -13,7 +12,6 @@ namespace AirMapDotNet
     /// <summary>
     /// The representation of a session on the AirMap API.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class AirMap
     {
         /// <summary>

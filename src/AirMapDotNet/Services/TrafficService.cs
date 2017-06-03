@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities.FlightAPI;
@@ -42,12 +43,15 @@ namespace AirMapDotNet.Services
             MqttClientOptions opts = new MqttClientOptions
             {
                 ClientId = Guid.NewGuid().ToString(),
-                CleanSession = true,
-                KeepAlivePeriod = TimeSpan.FromSeconds(15),
+
                 UserName = flightId,
                 Password = AirMap.AuthenticationToken.Token,
+
                 Server = AirMap_Traffic_MQTTBaseUrl,
                 Port = 8883,
+
+                CleanSession = true,
+                KeepAlivePeriod = TimeSpan.FromSeconds(15),
                 DefaultCommunicationTimeout = TimeSpan.FromSeconds(2)
             };
 
@@ -91,9 +95,9 @@ namespace AirMapDotNet.Services
         {
             Connected?.Invoke(this, EventArgs.Empty);
         }
-
-        // TODO: temporary
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "msg")]
+        
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "msg")]
+        [SuppressMessage("ReSharper", "UnusedVariable")]
         private void TfcSvc_OnMsgReceived(object sender, MqttApplicationMessageReceivedEventArgs mqttApplicationMessageReceivedEventArgs)
         {
             MqttApplicationMessage msg = mqttApplicationMessageReceivedEventArgs.ApplicationMessage;
