@@ -24,6 +24,23 @@ namespace AirMapDotNet
         /// Retrieves a list of drone models.
         /// </summary>
         /// <param name="manufacturerID">Optional manufacturer GUID.</param>
+        /// <returns>A list of drone models filtered by <paramref name="manufacturerID"/>.</returns>
+        /// <example>
+        /// <code>
+        /// AirMap am = new AirMap("YOUR API KEY");
+        /// 
+        /// // All Phantom drones from DJI
+        /// var phantoms = await am.GetModels(manufacturerID: "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9");
+        /// </code></example>
+        /// <exception cref="AirMapException">If the request fails.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="manufacturerID"/> is null or equals <see cref="string.Empty"/>.</exception>
+        public Task<IEnumerable<Model>> GetModels(string manufacturerID)
+            => _aircraftService.GetModels(manufacturerID, "");
+
+        /// <summary>
+        /// Retrieves a list of drone models.
+        /// </summary>
+        /// <param name="manufacturerID">Optional manufacturer GUID.</param>
         /// <param name="modelFilter">Optional model filter.</param>
         /// <returns>A list of drone models filtered by <paramref name="manufacturerID"/> and <paramref name="modelFilter"/>.</returns>
         /// <remarks>The filters both expect full phrases, such as "Phantom" for the Phantom 3.</remarks>

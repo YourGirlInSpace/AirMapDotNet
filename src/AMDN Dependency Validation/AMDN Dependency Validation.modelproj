@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4d6abfeb-43b4-486f-83da-01e0c855ebcc}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>AMDN Dependency Validation</Name>
+    <RootNamespace>AMDN Dependency Validation</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Validate Include="DV.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="DV.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>DV.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="DV.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>DV.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirMapDotNet.Explorables\AirMapDotNet.Explorables.csproj">
+      <Name>AirMapDotNet.Explorables</Name>
+      <Project>{8e146be1-6541-428c-bb41-f905c09c0e61}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Telemetry.NetCore\AirMapDotNet.Telemetry.NetCore.csproj">
+      <Name>AirMapDotNet.Telemetry.NetCore</Name>
+      <Project>{5fba0ae7-013c-4269-a9dc-9e3af464fdcb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Telemetry.NetFramework\AirMapDotNet.Telemetry.NetFramework.csproj">
+      <Name>AirMapDotNet.Telemetry.NetFramework</Name>
+      <Project>{1333f1ba-00d3-471d-8515-8635a04d814e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Telemetry\AirMapDotNet.Telemetry.csproj">
+      <Name>AirMapDotNet.Telemetry</Name>
+      <Project>{6ec52264-213a-4494-913a-ea9fc66e7202}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Tests\AirMapDotNet.Tests.csproj">
+      <Name>AirMapDotNet.Tests</Name>
+      <Project>{2d045a53-4ab8-47ed-b7e3-092796bfe1c8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Traffic.NetCore\AirMapDotNet.Traffic.NetCore.csproj">
+      <Name>AirMapDotNet.Traffic.NetCore</Name>
+      <Project>{616808cb-6298-421e-89f2-9e2ae2a4efa6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Traffic.NETFramework\AirMapDotNet.Traffic.NetFramework.csproj">
+      <Name>AirMapDotNet.Traffic.NetFramework</Name>
+      <Project>{4f3bebe1-f1cc-4555-bd79-3c10983c0c6e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Traffic\AirMapDotNet.Traffic.csproj">
+      <Name>AirMapDotNet.Traffic</Name>
+      <Project>{a34481c8-2deb-4518-a969-174f32434b12}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet\AirMapDotNet.csproj">
+      <Name>AirMapDotNet</Name>
+      <Project>{e57f43d5-2fb8-45b0-99bd-85e3f1c16123}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

@@ -49,9 +49,9 @@ namespace AirMapDotNet.Authentication
         /// <param name="password">The password.</param>
         /// <returns>A <see cref="AuthenticationToken"/> if authentication was successful.</returns>
         /// <exception cref="AuthenticationException">If authentication was unsuccessful or user data was not available.</exception>
-        /// <exception cref="AuthenticationException">If the <see cref="APIConfiguration.ClientID"/> property was not set.</exception>
+        /// <exception cref="AuthenticationException">If the <see cref="IAPIConfiguration.ClientID"/> property was not set.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="config"/> is null.</exception>
-        public static async Task<AuthenticationToken> LoginAsync(APIConfiguration config, string username, string password)
+        public static async Task<AuthenticationToken> LoginAsync(IAPIConfiguration config, string username, string password)
         {
             if (config == null)
                 throw new ArgumentNullException(nameof(config));

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
+    <Version>1.0.4</Version>
+    <Authors>Zazzmatazz</Authors>
+    <Company>Zazzmatazz</Company>
+    <Product>AirMapDotNet</Product>
+    <Description>A .NET SDK for the AirMap API.  This is an addon library for the Telemetry API.</Description>
+    <Copyright>2017 Patrick D. Mathis</Copyright>
+    <PackageLicenseUrl>https://github.com/Zazzmatazz/AirMapDotNet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Zazzmatazz/AirMapDotNet</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Zazzmatazz/AirMapDotNet/master/media/airmapdotnet.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Zazzmatazz/AirMapDotNet</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>dotnet airmap drone api sdk telemetry</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirMapDotNet\AirMapDotNet.csproj" />
+  </ItemGroup>
+
+</Project>

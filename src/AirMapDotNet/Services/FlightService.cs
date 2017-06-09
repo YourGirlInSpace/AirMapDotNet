@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Security.Authentication;
+using System.Net;
 using System.Threading.Tasks;
-using System.Web;
+using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities;
 using AirMapDotNet.Entities.FlightAPI;
 using AirMapDotNet.Entities.GeoJSON;
@@ -82,11 +82,11 @@ namespace AirMapDotNet.Services
             geoJson = geoJson.Replace("\n", "");
             geoJson = geoJson.Replace(" ", "");
 
-            string geoJsonEncoded = HttpUtility.UrlEncode(geoJson);
+            string geoJsonEncoded = WebUtility.UrlEncode(geoJson);
 
             Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
 
-            NameValueCollection parms = new NameValueCollection
+            Dictionary<string, string> parms = new Dictionary<string, string>
             {
                 ["geometry"] = geoJsonEncoded,
                 ["enhance"] = enhance ? "true" : "false",
@@ -114,8 +114,8 @@ namespace AirMapDotNet.Services
 
             Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
 
-            string geoJsonEncoded = HttpUtility.UrlEncode(JsonConvert.SerializeObject(geom));
-            NameValueCollection parms = new NameValueCollection
+            string geoJsonEncoded = WebUtility.UrlEncode(JsonConvert.SerializeObject(geom));
+            Dictionary<string, string> parms = new Dictionary<string, string>
             {
                 ["start_before"] = DateTime.UtcNow.ToString("O"),
                 ["end_after"] = DateTime.UtcNow.ToString("O"),
@@ -135,7 +135,7 @@ namespace AirMapDotNet.Services
         /// <param name="limit">The maximum amount of flights to return.</param>
         /// <param name="enhance">If <b>true</b>, the returned data will be enhanced with extra information.</param>
         /// <returns>A list of all flights created by the currently authenticated user.</returns>
-        /// <exception cref="AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
+        /// <exception cref="AirMapDotNet.Authentication.AuthenticationException">If the <see cref="AirMap.AuthenticationToken"/> is not set, or has expired, or the token is not valid for this resource.</exception>
         /// <exception cref="AirMapException">If the request fails.</exception>
         internal async Task<IEnumerable<Flight>> GetMyFlights(int limit, bool enhance)
         {
@@ -146,7 +146,7 @@ namespace AirMapDotNet.Services
 
             Href<PagedEntityCollection<Flight>> flightLink = new Href<PagedEntityCollection<Flight>>(new Uri(AirMap_Flight_All));
             
-            NameValueCollection parms = new NameValueCollection
+            Dictionary<string, string> parms = new Dictionary<string, string>
             {
                 ["pilot_id"] = AirMap.AuthenticationToken.User.UserID,
                 ["enhance"] = enhance ? "true" : "false",

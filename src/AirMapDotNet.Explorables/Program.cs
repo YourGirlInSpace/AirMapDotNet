@@ -34,7 +34,7 @@ namespace AirMapDotNet.Explorables
             try
             {
                 APIConfiguration config = await APIConfiguration.LoadFromFileAsync("airmap.config.json");
-                
+
                 AirMap airMap = new AirMap(config);
                 
                 airMap.AuthenticationToken = await AuthenticationService.LoginAsync(airMap, DebugData.username, DebugData.password);
@@ -58,9 +58,10 @@ namespace AirMapDotNet.Explorables
 
                 var flt = await airMap.CreateFlight(fcp);*/
 
-                string flightID = "flight|xEywlJkioDZxpGFD9Mx97T0qbl3K";
+                //string flightID = "flight|xEywlJkioDZxpGFD9Mx97T0qbl3K";
 
-                bool ok = await airMap.TrafficService.Connect(flightID);
+                //TrafficAPI traf = TrafficAPI.FromInstance(airMap);
+                //bool ok = await traf.Connect(flightID);
             }
             catch (AirMapException ex)
             {

@@ -1,0 +1,37 @@
+﻿{
+    "status": "success",
+    "data": [
+        {
+            "id": "b3b1c26f-06da-4eae-9390-667c90039175",
+            "name": "Phantom 3",
+            "manufacturer": {
+                "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+                "name": "DJI"
+            }
+        },
+        {
+            "id": "0bdc3e35-75ba-4e02-9040-d336d11f5202",
+            "name": "Phantom 1",
+            "manufacturer": {
+                "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+                "name": "DJI"
+            }
+        },
+        {
+            "id": "692fb4f0-fcf7-4f6b-9943-4292b061f09e",
+            "name": "Phantom 2",
+            "manufacturer": {
+                "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+                "name": "DJI"
+            }
+        },
+        {
+            "id": "786bbd91-0509-4a36-94eb-f9fa46d1d20b",
+            "name": "Phantom 4",
+            "manufacturer": {
+                "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+                "name": "DJI"
+            }
+        }
+    ]
+}

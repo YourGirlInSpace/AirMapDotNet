@@ -15,147 +15,147 @@
         /// <summary>
         /// Base URL for the AirMap API.
         /// </summary>
-        internal const string AirMap_BaseURL = "https://api.airmap.com/";
+        protected const string AirMap_BaseURL = "https://api.airmap.com/";
 
         #region Aircraft SDK
         /// <summary>
         /// Aircraft SDK version.
         /// </summary>
-        internal const string AirMap_Aircraft_Version = "v2/";
+        protected const string AirMap_Aircraft_Version = "v2/";
         /// <summary>
         /// Base URL for the Aircraft SDK.
         /// </summary>
-        internal const string AirMap_Aircraft_BaseURL = AirMap_BaseURL + "aircraft/" + AirMap_Aircraft_Version;
+        protected const string AirMap_Aircraft_BaseURL = AirMap_BaseURL + "aircraft/" + AirMap_Aircraft_Version;
         /// <summary>
         /// Resource location for all known aircraft manufacturers.
         /// </summary>
-        internal const string AirMap_Aircraft_Manufacturers = AirMap_Aircraft_BaseURL + "manufacturer/";
+        protected const string AirMap_Aircraft_Manufacturers = AirMap_Aircraft_BaseURL + "manufacturer/";
         /// <summary>
         /// Resource location for all known aircraft models.
         /// </summary>
-        internal const string AirMap_Aircraft_Models = AirMap_Aircraft_BaseURL + "model/";
+        protected const string AirMap_Aircraft_Models = AirMap_Aircraft_BaseURL + "model/";
         /// <summary>
         /// Resource location for a specific aircraft model.  {0} = Model UID
         /// </summary>
-        internal const string AirMap_Aircraft_Model = AirMap_Aircraft_Models + "{0}/";
+        protected const string AirMap_Aircraft_Model = AirMap_Aircraft_Models + "{0}/";
         #endregion
 
         #region Flight SDK
         /// <summary>
         /// Flight SDK version.
         /// </summary>
-        internal const string AirMap_Flight_Version = "v2/";
+        protected const string AirMap_Flight_Version = "v2/";
         /// <summary>
         /// Base URL for the Flight SDK.
         /// </summary>
-        internal const string AirMap_Flight_BaseURL = AirMap_BaseURL + "flight/" + AirMap_Flight_Version;
+        protected const string AirMap_Flight_BaseURL = AirMap_BaseURL + "flight/" + AirMap_Flight_Version;
         /// <summary>
         /// Resource location for all flight activity.
         /// </summary>
-        internal const string AirMap_Flight_All = AirMap_Flight_BaseURL;
+        protected const string AirMap_Flight_All = AirMap_Flight_BaseURL;
         /// <summary>
         /// Resource location for all flight activity by point.
         /// </summary>
-        internal const string AirMap_Flight_Point = AirMap_Flight_BaseURL + "point/";
+        protected const string AirMap_Flight_Point = AirMap_Flight_BaseURL + "point/";
         /// <summary>
         /// Resource location for all flight activity by path.
         /// </summary>
-        internal const string AirMap_Flight_Path = AirMap_Flight_BaseURL + "path/";
+        protected const string AirMap_Flight_Path = AirMap_Flight_BaseURL + "path/";
         /// <summary>
         /// Resource location for all flight activity by polygon.
         /// </summary>
-        internal const string AirMap_Flight_Polygon = AirMap_Flight_BaseURL + "polygon/";
+        protected const string AirMap_Flight_Polygon = AirMap_Flight_BaseURL + "polygon/";
         /// <summary>
         /// Resource location for a particular flight.  {0} = Flight ID.
         /// </summary>
-        internal const string AirMap_Flight_ByID = AirMap_Flight_BaseURL + "{0}/";
+        protected const string AirMap_Flight_ByID = AirMap_Flight_BaseURL + "{0}/";
         /// <summary>
         /// Resource location to delete a particular flight.  {0} = Flight ID.
         /// </summary>
-        internal const string AirMap_Flight_DeleteByID = AirMap_Flight_ByID + "delete/";
+        protected const string AirMap_Flight_DeleteByID = AirMap_Flight_ByID + "delete/";
         /// <summary>
         /// Resource location to end a particular flight.  {0} = Flight ID.
         /// </summary>
-        internal const string AirMap_Flight_EndByID = AirMap_Flight_ByID + "end/";
-        internal const string AirMap_Flight_StartCommByID = AirMap_Flight_ByID + "start-comm/";
-        internal const string AirMap_Flight_EndCommByID = AirMap_Flight_ByID + "end-comm/";
+        protected const string AirMap_Flight_EndByID = AirMap_Flight_ByID + "end/";
+        protected const string AirMap_Flight_StartCommByID = AirMap_Flight_ByID + "start-comm/";
+        protected const string AirMap_Flight_EndCommByID = AirMap_Flight_ByID + "end-comm/";
         #endregion
 
         #region Pilot SDK
         /// <summary>
         /// Pilot SDK Version.
         /// </summary>
-        internal const string AirMap_Pilot_Version = "v2/";
+        protected const string AirMap_Pilot_Version = "v2/";
         /// <summary>
         /// Base URL for the Pilot SDK.
         /// </summary>
-        internal const string AirMap_Pilot_BaseURL = AirMap_BaseURL + "pilot/" + AirMap_Pilot_Version;
+        protected const string AirMap_Pilot_BaseURL = AirMap_BaseURL + "pilot/" + AirMap_Pilot_Version;
         /// <summary>
         /// Resource location for a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID = AirMap_Pilot_BaseURL + "{0}";
+        protected const string AirMap_Pilot_ByID = AirMap_Pilot_BaseURL + "{0}";
         /// <summary>
         /// Resource location for all aircraft owned by a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID_Aircraft = AirMap_Pilot_ByID + "/aircraft";
+        protected const string AirMap_Pilot_ByID_Aircraft = AirMap_Pilot_ByID + "/aircraft";
         /// <summary>
         /// Resource location for a particular aircraft owned by a particular pilot.  {0} = Pilot ID.  {1} = Aircraft ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID_Aircraft_ByID = AirMap_Pilot_ByID_Aircraft + "/{1}/";
+        protected const string AirMap_Pilot_ByID_Aircraft_ByID = AirMap_Pilot_ByID_Aircraft + "/{1}/";
         /// <summary>
         /// Base URL for phone operations for a particular pilot.  {0} = Pilot ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID_Phone = AirMap_Pilot_ByID + "/phone";
+        protected const string AirMap_Pilot_ByID_Phone = AirMap_Pilot_ByID + "/phone";
         /// <summary>
         /// Resource location to send a verification token to a particular pilot's phone.  {0} = Pilot ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID_Phone_SendToken = AirMap_Pilot_ByID_Phone + "/send_token";
+        protected const string AirMap_Pilot_ByID_Phone_SendToken = AirMap_Pilot_ByID_Phone + "/send_token";
         /// <summary>
         /// Resource location to verify a token previously sent to a particular pilot's phone.  {0} = Pilot ID.
         /// </summary>
-        internal const string AirMap_Pilot_ByID_Phone_VerifyToken = AirMap_Pilot_ByID_Phone + "/verify_token";
+        protected const string AirMap_Pilot_ByID_Phone_VerifyToken = AirMap_Pilot_ByID_Phone + "/verify_token";
         #endregion
 
         #region Status SDK
         /// <summary>
         /// Status SDK version.
         /// </summary>
-        internal const string AirMap_Status_Version = "v2/";
+        protected const string AirMap_Status_Version = "v2/";
         /// <summary>
         /// Base URL for the Status SDK.
         /// </summary>
-        internal const string AirMap_Status_BaseURL = AirMap_BaseURL + "status/" + AirMap_Status_Version;
+        protected const string AirMap_Status_BaseURL = AirMap_BaseURL + "status/" + AirMap_Status_Version;
         /// <summary>
         /// Resource location for status information by a point.
         /// </summary>
-        internal const string AirMap_Status_ByPoint = AirMap_Status_BaseURL + "point/";
+        protected const string AirMap_Status_ByPoint = AirMap_Status_BaseURL + "point/";
         /// <summary>
         /// Resource location for status information by a path.
         /// </summary>
-        internal const string AirMap_Status_ByPath = AirMap_Status_BaseURL + "path/";
+        protected const string AirMap_Status_ByPath = AirMap_Status_BaseURL + "path/";
         /// <summary>
         /// Resource location for status information by a polygon.
         /// </summary>
-        internal const string AirMap_Status_ByPolygon = AirMap_Status_BaseURL + "polygon/";
+        protected const string AirMap_Status_ByPolygon = AirMap_Status_BaseURL + "polygon/";
         #endregion
 
         #region Airspace SDK
         /// <summary>
         /// Airspace SDK version.
         /// </summary>
-        internal const string AirMap_Airspace_Version = "v2/";
+        protected const string AirMap_Airspace_Version = "v2/";
         /// <summary>
         /// Base URL for the Airspace SDK.
         /// </summary>
-        internal const string AirMap_Airspace_BaseURL = AirMap_BaseURL + "airspace/" + AirMap_Airspace_Version;
+        protected const string AirMap_Airspace_BaseURL = AirMap_BaseURL + "airspace/" + AirMap_Airspace_Version;
         /// <summary>
         /// Resource location for a particular airspace object.
         /// </summary>
-        internal const string AirMap_Airspace_ByID = AirMap_Airspace_BaseURL + "{0}/";
+        protected const string AirMap_Airspace_ByID = AirMap_Airspace_BaseURL + "{0}/";
         /// <summary>
         /// Resource location for airspace objects.
         /// </summary>
-        internal const string AirMap_Airspace_ByIDs = AirMap_Airspace_BaseURL + "list/";
+        protected const string AirMap_Airspace_ByIDs = AirMap_Airspace_BaseURL + "list/";
 
         #endregion
 
@@ -163,15 +163,15 @@
         /// <summary>
         /// Traffic Alert SDK base MQTT URL.
         /// </summary>
-        internal const string AirMap_Traffic_MQTTBaseUrl = "ssl://mqtt-prod.airmap.io";
+        protected const string AirMap_Traffic_MQTTBaseUrl = "ssl://mqtt-prod.airmap.io";
         /// <summary>
         /// Alert channel for a particular flight.  {0} = Flight ID.
         /// </summary>
-        internal const string AirMap_Traffic_AlertChannel = "uav/traffic/alert/{0}";
+        protected const string AirMap_Traffic_AlertChannel = "uav/traffic/alert/{0}";
         /// <summary>
         /// Situational awareness channel for a particular flight.  {0} = Flight ID.
         /// </summary>
-        internal const string AirMap_Traffic_SituationalAwarenessChannel = "uav/traffic/sa/{0}";
+        protected const string AirMap_Traffic_SituationalAwarenessChannel = "uav/traffic/sa/{0}";
         #endregion
 
         #region Telemetry SDK
@@ -191,7 +191,7 @@
         /// </summary>
         public AirMap AirMap { get; protected set; }
 
-        internal AirMapService(AirMap am)
+        protected AirMapService(AirMap am)
         {
             AirMap = am;
         }

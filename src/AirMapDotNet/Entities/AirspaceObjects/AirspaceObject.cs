@@ -82,9 +82,9 @@ namespace AirMapDotNet.Entities.AirspaceObjects
             return 
                 (
                     from t in Utilities.GetTypesWithAttribute<ObjectTypeAttribute>()
-                    let objType = t.GetCustomAttribute<ObjectTypeAttribute>(true)
+                    let objType = t.GetTypeInfo().GetCustomAttribute<ObjectTypeAttribute>(true)
                     // There should only be one instance of this
-                    where objType.TypeName.Equals(type, StringComparison.InvariantCultureIgnoreCase)
+                    where objType.TypeName.Equals(type)
                     select (AirspaceObject) JsonConvert.DeserializeObject(json, t)
                 ).FirstOrDefault();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.Web;
+using System.Collections.Generic;
 using AirMapDotNet.Entities;
 using Newtonsoft.Json;
 
@@ -45,19 +44,19 @@ namespace AirMapDotNet
         /// <param name="parameters">The query parameters to append to the <see cref="Uri"/></param>
         /// <returns>The compiled URL.</returns>
         /// <exception cref="ArgumentNullException">If <paramref name="parameters"/> is null.</exception>
-        public Uri Compile(NameValueCollection parameters)
+        public Uri Compile(Dictionary<string, string> parameters)
         {
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
             UriBuilder uriBuilder = new UriBuilder(Uri);
 
-            NameValueCollection query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            Dictionary<string, string> query = Utilities.ParseQueryString(uriBuilder.Query);
 
-            foreach (string key in parameters.AllKeys)
+            foreach (string key in parameters.Keys)
                 query[key] = parameters[key];
 
-            uriBuilder.Query = query.ToString();
+            uriBuilder.Query = Utilities.EncodeQuery(parameters);
 
             return uriBuilder.Uri;
         }

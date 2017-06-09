@@ -26,7 +26,7 @@ namespace AirMapDotNet.Tests
         {
             Href google = new Href(new Uri("http://google.com"));
 
-            NameValueCollection nvc = new NameValueCollection
+            Dictionary<string, string> nvc = new Dictionary<string, string>
             {
                 ["q"] = "test"
             };

@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities;
@@ -7,6 +8,12 @@ using AirMapDotNet.Requestors;
 using AirMapDotNet.Services;
 
 [assembly:CLSCompliant(true)]
+[assembly: InternalsVisibleTo("AirMapDotNet.Tests")]
+[assembly: InternalsVisibleTo("AirMapDotNet.Explorables")]
+[assembly: InternalsVisibleTo("AirMapDotNet.NetFramework")]
+[assembly: InternalsVisibleTo("AirMapDotNet.NetCore")]
+[assembly: InternalsVisibleTo("AirMapDotNet.Telemetry")]
+[assembly: InternalsVisibleTo("AirMapDotNet.Traffic")]
 namespace AirMapDotNet
 {
     /// <summary>
@@ -17,7 +24,7 @@ namespace AirMapDotNet
         /// <summary>
         /// The API configuration used by this session.
         /// </summary>
-        internal APIConfiguration Config { get; }
+        internal IAPIConfiguration Config { get; }
 
         /// <summary>
         /// The <see cref="Requestor"/> used to interact with the AirMap API.
@@ -35,17 +42,15 @@ namespace AirMapDotNet
             _statusService = new StatusService(this);
             _flightService = new FlightService(this);
             _aircraftService = new AircraftService(this);
-            TrafficService = new TrafficService(this);
         }
 
         /// <summary>
         /// Creates a new AirMap API session using the provided <paramref name="config"/>.
         /// </summary>
         /// <param name="config">The <see cref="APIConfiguration"/> for this session.</param>
-        public AirMap(APIConfiguration config)
+        internal AirMap(IAPIConfiguration config)
             : this()
         {
-            Requestor = new HTTPRequestor();
             Config = config;
         }
 
@@ -54,7 +59,7 @@ namespace AirMapDotNet
         /// </summary>
         /// <param name="config">The <see cref="APIConfiguration"/> for this session.</param>
         /// <param name="auth">The authentication token.</param>
-        public AirMap(APIConfiguration config, AuthenticationToken auth)
+        public AirMap(IAPIConfiguration config, AuthenticationToken auth)
             : this(config)
         {
             AuthenticationToken = auth;
@@ -81,7 +86,7 @@ namespace AirMapDotNet
         /// <typeparam name="T">The underlying type of the resource.</typeparam>
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        internal async Task<T> GetAsync<T>(Href<T> uri, NameValueCollection parameters)
+        internal async Task<T> GetAsync<T>(Href<T> uri, Dictionary<string, string> parameters)
             where T : class, IAirMapEntity => uri == null
             ? default(T)
             : await GetAsync<T>(uri.Compile(parameters))
@@ -105,7 +110,7 @@ namespace AirMapDotNet
         /// <typeparam name="T">The underlying type of the resource.</typeparam>
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        internal T Get<T>(Href<T> uri, NameValueCollection parameters)
+        internal T Get<T>(Href<T> uri, Dictionary<string, string> parameters)
             where T : class, IAirMapEntity => GetAsync(uri, parameters).Result;
 
 
@@ -156,7 +161,7 @@ namespace AirMapDotNet
         /// <param name="parameters">Query parameters for the resource request.</param>
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        internal async Task<string> GetStatusAsync(Href uri, NameValueCollection parameters)
+        internal async Task<string> GetStatusAsync(Href uri, Dictionary<string, string> parameters)
              => uri == null
             ? string.Empty
             : await GetStatusAsync(uri.Compile(parameters))
@@ -178,7 +183,7 @@ namespace AirMapDotNet
         /// <param name="parameters">Query parameters for the resource request.</param>
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
-        internal string GetStatus(Href uri, NameValueCollection parameters)
+        internal string GetStatus(Href uri, Dictionary<string, string> parameters)
             => GetStatusAsync(uri, parameters).Result;
 
 
@@ -229,7 +234,7 @@ namespace AirMapDotNet
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        internal async Task<T> PostAsync<T>(Href<T> uri, NameValueCollection parameters, object data)
+        internal async Task<T> PostAsync<T>(Href<T> uri, Dictionary<string, string> parameters, object data)
             where T : class, IAirMapEntity => uri == null
             ? default(T)
             : await PostAsync<T>(uri.Compile(parameters), data)
@@ -257,7 +262,7 @@ namespace AirMapDotNet
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        internal T Post<T>(Href<T> uri, NameValueCollection parameters, object data)
+        internal T Post<T>(Href<T> uri, Dictionary<string, string> parameters, object data)
             where T : class, IAirMapEntity => PostAsync(uri, parameters, data).Result;
 
         /// <summary>
@@ -319,7 +324,7 @@ namespace AirMapDotNet
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        internal async Task<T> PatchAsync<T>(Href<T> uri, NameValueCollection parameters, object data)
+        internal async Task<T> PatchAsync<T>(Href<T> uri, Dictionary<string, string> parameters, object data)
             where T : class, IAirMapEntity => uri == null
             ? default(T)
             : await PatchAsync<T>(uri.Compile(parameters), data)
@@ -347,7 +352,7 @@ namespace AirMapDotNet
         /// <returns>The resultant data.</returns>
         /// <exception cref="AirMapException">If the request fails.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        internal T Patch<T>(Href<T> uri, NameValueCollection parameters, object data)
+        internal T Patch<T>(Href<T> uri, Dictionary<string, string> parameters, object data)
             where T : class, IAirMapEntity => PatchAsync(uri, parameters, data).Result;
 
         /// <summary>

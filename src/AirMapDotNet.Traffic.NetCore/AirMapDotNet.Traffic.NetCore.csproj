@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>AirMapDotNet.Traffic</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MQTTnet" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirMapDotNet.Traffic\AirMapDotNet.Traffic.csproj" />
+    <ProjectReference Include="..\AirMapDotNet\AirMapDotNet.csproj" />
+  </ItemGroup>
+
+</Project>

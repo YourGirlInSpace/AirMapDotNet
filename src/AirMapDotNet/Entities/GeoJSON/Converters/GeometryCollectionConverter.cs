@@ -42,7 +42,9 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             JToken pointArray = JToken.ReadFrom(reader);
 
             GeometryCollection pf = new GeometryCollection();
-            pointArray.ToObject<Geometry[]>().ToList().ForEach(x => pf.Geometries.Add(x));
+
+            foreach (var x in pointArray.ToObject<Geometry[]>())
+                pf.Geometries.Add(x);
 
             return pf;
         }

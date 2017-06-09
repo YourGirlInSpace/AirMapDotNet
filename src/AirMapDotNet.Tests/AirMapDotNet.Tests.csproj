@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AirMapDotNet.Tests</RootNamespace>
     <AssemblyName>AirMapDotNet.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -19,6 +19,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.1.17\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -49,6 +51,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.FileSystem, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.0.1\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,27 +71,78 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="AirMapExceptionTest.cs" />
     <Compile Include="AirMapTest.cs" />
     <Compile Include="Authentication\AuthenticationTokenTests.cs" />
     <Compile Include="Entities\GeoJSON\FeatureCollectionTest.cs" />
     <Compile Include="Entities\GeoJSON\FeatureTest.cs" />
+    <Compile Include="Entities\TrafficAPI\TrafficCollectionTest.cs" />
     <Compile Include="GeoUtilitiesTests.cs" />
     <Compile Include="HrefTests.cs" />
     <Compile Include="LatLonTests.cs" />
+    <Compile Include="Mocks\IMqttTestClient.cs" />
+    <Compile Include="Mocks\MockMQTTClient.cs" />
+    <Compile Include="Mocks\MockRequestor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traffic\TrafficTest.cs" />
     <Compile Include="UtilitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\AMDN Dependency Validation\DV.layerdiagram">
+      <Link>DV.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <Content Include="airmap.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Readme.txt" />
     <None Include="app.config" />
+    <None Include="Data\GET\aircraft\v2\manufacturer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\GET\aircraft\v2\model.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\GET\aircraft\v2\model_by_id.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\GET\flight\v2\flight.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\GET\flight\v2\flights.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\POST\flight\v2\flight_by_point.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\TrafficData.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requestors\" />
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirMapDotNet.Telemetry.NetFramework\AirMapDotNet.Telemetry.NetFramework.csproj">
+      <Project>{1333f1ba-00d3-471d-8515-8635a04d814e}</Project>
+      <Name>AirMapDotNet.Telemetry.NetFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Telemetry\AirMapDotNet.Telemetry.csproj">
+      <Project>{6ec52264-213a-4494-913a-ea9fc66e7202}</Project>
+      <Name>AirMapDotNet.Telemetry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Traffic.NETFramework\AirMapDotNet.Traffic.NetFramework.csproj">
+      <Project>{4f3bebe1-f1cc-4555-bd79-3c10983c0c6e}</Project>
+      <Name>AirMapDotNet.Traffic.NetFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AirMapDotNet.Traffic\AirMapDotNet.Traffic.csproj">
+      <Project>{a34481c8-2deb-4518-a969-174f32434b12}</Project>
+      <Name>AirMapDotNet.Traffic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AirMapDotNet\AirMapDotNet.csproj">
-      <Project>{0b2bea3a-f8e2-48d9-9c4c-d3ffa6aa322c}</Project>
+      <Project>{e57f43d5-2fb8-45b0-99bd-85e3f1c16123}</Project>
       <Name>AirMapDotNet</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="5aa646b2-a0b5-41a6-a4f0-94ef84e3abce" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <comments>
+    <comment Id="f02a52cd-8e5e-49fa-b6ce-1effbb26d834" name="Comment1">
+      <body>Traffic API (optional)</body>
+      <layerElements>
+        <linkFromCommentToLayerElement>
+          <layerMoniker Id="86d5b670-3020-4a39-bae3-78a089bbc990" />
+        </linkFromCommentToLayerElement>
+      </layerElements>
+    </comment>
+    <comment Id="7dcfc802-923c-4d3b-a4a6-c5b99a256876" name="Comment2">
+      <body>Telemetry API (optional)</body>
+      <layerElements>
+        <linkFromCommentToLayerElement>
+          <layerMoniker Id="e412af37-8dba-4f1e-ba65-e2f9808e8cdc" />
+        </linkFromCommentToLayerElement>
+      </layerElements>
+    </comment>
+    <comment Id="7fc01f06-d494-4a45-bf04-501c75e9e9b7" name="Comment3">
+      <body>The two optional libraries contain separate Framework libraries that serve to provide the Standard libraries with an interface in which to communicate with the AirMap servers.  Since there are different communication systems between .NET Framework and .NET Core, this is necessary.</body>
+    </comment>
+  </comments>
+  <layers>
+    <layer Id="46c030e7-2918-40a6-a368-a76d2cf033c4" name="AirMapDotNet">
+      <references>
+        <reference Id="da0462ac-37f9-4b13-9ad3-db37ac7a981d" name="AirMapDotNet">
+          <ArtifactNode Label="AirMapDotNet" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet/AirMapDotNet.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet)" Label="AirMapDotNet.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="86d5b670-3020-4a39-bae3-78a089bbc990" name="AirMapDotNet.Traffic">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="1867d04c-152e-48f5-bb8e-5b9005f0e9ae" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="2b5cbe12-c095-4cb5-bdb6-17a552fbad61" name="AirMapDotNet.Traffic">
+          <ArtifactNode Label="AirMapDotNet.Traffic" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Traffic/AirMapDotNet.Traffic.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Traffic)" Label="AirMapDotNet.Traffic.dll" Category="CodeSchema_Assembly">
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="e412af37-8dba-4f1e-ba65-e2f9808e8cdc" name="AirMapDotNet.Telemetry">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="daf49d8a-5533-4676-96ac-b8baf126e4d8" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="22ef08a8-93b4-475b-808a-4159ae05e8c7" name="AirMapDotNet.Telemetry">
+          <ArtifactNode Label="AirMapDotNet.Telemetry" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Telemetry/AirMapDotNet.Telemetry.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Telemetry)" Label="AirMapDotNet.Telemetry.dll" Category="CodeSchema_Assembly">
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="2cc5f60d-19fb-4ed3-aae4-3e64d10c6961" name="AirMapDotNet.Traffic.NetFramework">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="f8be7eda-5e8b-4707-aa88-afa7b27e3b83" direction="Forward">
+          <layerMoniker Id="86d5b670-3020-4a39-bae3-78a089bbc990" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="73e9f254-701e-4c2a-8a1e-28476d54a3b3" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="a04980ca-11e0-4de1-a40a-e00dbface50d" name="AirMapDotNet.Traffic.NetFramework">
+          <ArtifactNode Label="AirMapDotNet.Traffic.NetFramework" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Traffic.NETFramework/AirMapDotNet.Traffic.NetFramework.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Traffic)" Label="AirMapDotNet.Traffic.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="ab32a1c0-26da-43db-aa5e-741b830a48a3" name="AirMapDotNet.Traffic.NetCore">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="c2f27100-bbd9-4d8b-b479-befdfbed0c32" direction="Forward">
+          <layerMoniker Id="86d5b670-3020-4a39-bae3-78a089bbc990" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="be708b04-50dc-46c4-8748-fc4f713c41c1" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="3b7aa509-462a-41c9-baa6-53fbbb308c8d" name="AirMapDotNet.Traffic.NetCore">
+          <ArtifactNode Label="AirMapDotNet.Traffic.NetCore" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Traffic.NetCore/AirMapDotNet.Traffic.NetCore.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Traffic.NetCore)" Label="AirMapDotNet.Traffic.NetCore.dll" Category="CodeSchema_Assembly">
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="3b01966b-b0dd-49eb-8ae2-917e680195d1" name="AirMapDotNet.Telemetry.NetCore">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="b1453e5d-5a9f-4b8a-b310-2844ec44b081" direction="Forward">
+          <layerMoniker Id="e412af37-8dba-4f1e-ba65-e2f9808e8cdc" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="9fa410c8-3297-4a2d-98e8-dac6ab60e2a2" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="8d0b1303-9758-4b28-a3d7-4b326237fe2f" name="AirMapDotNet.Telemetry.NetCore">
+          <ArtifactNode Label="AirMapDotNet.Telemetry.NetCore" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Telemetry.NetCore/AirMapDotNet.Telemetry.NetCore.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Telemetry.NetCore)" Label="AirMapDotNet.Telemetry.NetCore.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="409cc402-e9e5-4726-8a03-ba7e2234a84f" name="AirMapDotNet.Telemetry.NetFramework">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="51ee0192-2c6e-4afa-bfed-aae99ecfab93" direction="Forward">
+          <layerMoniker Id="e412af37-8dba-4f1e-ba65-e2f9808e8cdc" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="514bae18-a059-4ba9-9f4a-a45c030f4e0f" direction="Forward">
+          <layerMoniker Id="46c030e7-2918-40a6-a368-a76d2cf033c4" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="a972cdee-cb4b-4248-8ead-5c451b257c7d" name="AirMapDotNet.Telemetry.NetFramework">
+          <ArtifactNode Label="AirMapDotNet.Telemetry.NetFramework" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/GitHub/AirMapDotNet/src/AirMapDotNet.Telemetry.NetFramework/AirMapDotNet.Telemetry.NetFramework.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=AirMapDotNet.Telemetry)" Label="AirMapDotNet.Telemetry.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>

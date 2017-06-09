@@ -1,0 +1,11 @@
+﻿{
+    "status": "success",
+    "data": {
+        "id": "786bbd91-0509-4a36-94eb-f9fa46d1d20b",
+        "name": "Phantom 4",
+        "manufacturer": {
+            "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+            "name": "DJI"
+        }
+    }
+}

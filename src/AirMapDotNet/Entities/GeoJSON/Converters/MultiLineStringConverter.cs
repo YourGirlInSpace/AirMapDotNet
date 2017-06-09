@@ -42,7 +42,9 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             JToken pointArray = JToken.ReadFrom(reader);
 
             MultiLineString pf = new MultiLineString();
-            pointArray.ToObject<LineString[]>().ToList().ForEach(x => pf.LineStrings.Add(x));
+
+            foreach (var x in pointArray.ToObject<LineString[]>())
+                pf.LineStrings.Add(x);
 
             return pf;
         }

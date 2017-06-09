@@ -1,0 +1,41 @@
+﻿{
+    "status": "success",
+    "data": [
+        {
+            "id": "b6d8ec6e-a57a-4742-8983-923196d55b1b",
+            "name": "LaTrax"
+        },
+        {
+            "id": "8d0cf81a-2709-47d2-945d-56e120f61626",
+            "name": "TBS"
+        },
+        {
+            "id": "d280ceed-2a64-4076-9479-7b91038678d9",
+            "name": "3D Robotics"
+        },
+        {
+            "id": "2a55b47e-ca49-4b7e-99c7-dee9cd784ec9",
+            "name": "DJI"
+        },
+        {
+            "id": "3d7e01fe-3c79-4a0c-86bf-ce6115992024",
+            "name": "Quanum"
+        },
+        {
+            "id": "0c71de37-d500-4702-91ef-56d7ec606aa7",
+            "name": "Yuneec"
+        },
+        {
+            "id": "6f25a640-60d9-4b98-8602-67094b7a8914",
+            "name": "Parrot"
+        },
+        {
+            "id": "2bd7c486-5b35-4da9-96d8-1a520c328c65",
+            "name": "Lumenier"
+        },
+        {
+            "id": "3bb10775-4567-4c16-8477-df013ae60237",
+            "name": "Other"
+        }
+    ]
+}

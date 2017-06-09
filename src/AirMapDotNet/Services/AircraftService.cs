@@ -64,7 +64,7 @@ namespace AirMapDotNet.Services
             Href<EntityCollection<Model>> modelLink =
                 new Href<EntityCollection<Model>>(new Uri(AirMap_Aircraft_Models));
 
-            NameValueCollection query = new NameValueCollection();
+            Dictionary<string, string> query = new Dictionary<string, string>();
 
             if (!string.IsNullOrWhiteSpace(manufacturerID))
                 query.Add("manufacturer", manufacturerID);
@@ -104,7 +104,7 @@ namespace AirMapDotNet.Services
             Href<EntityCollection<Model>> modelLink =
                 new Href<EntityCollection<Model>>(new Uri(AirMap_Aircraft_Models));
 
-            NameValueCollection query = new NameValueCollection
+            Dictionary<string, string> query = new Dictionary<string, string>
             {
                 ["manufacturer"] = manufacturer.ID
             };

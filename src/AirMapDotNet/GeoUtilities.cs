@@ -164,6 +164,7 @@ namespace AirMapDotNet
 
             // Using the Parallel framework to speed up calculations with absurd
             // numbers of points.  Yaaaay multiple processors.
+            
             Parallel.For(0, ls.Points.Count - 1, (i, state) =>
             {
                 LatLon a = ls.Points[i].LatLon;

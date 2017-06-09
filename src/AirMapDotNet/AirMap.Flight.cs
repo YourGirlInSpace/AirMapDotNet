@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Authentication;
 using System.Threading.Tasks;
+using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities.FlightAPI;
 using AirMapDotNet.Entities.GeoJSON;
 using AirMapDotNet.Entities.GeoJSON.GeoObjects;

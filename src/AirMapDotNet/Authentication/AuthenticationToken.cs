@@ -73,7 +73,8 @@ namespace AirMapDotNet.Authentication
             {
                 string[] idTokenParts = token.Split('.');
 
-                string payload = Encoding.UTF8.GetString(Convert.FromBase64String(PadBase64(idTokenParts[1])));
+                byte[] base64Arr = Convert.FromBase64String(PadBase64(idTokenParts[1]));
+                string payload = Encoding.UTF8.GetString(base64Arr, 0, base64Arr.Length);
                 JWTPayload payloadData = JsonConvert.DeserializeObject<JWTPayload>(payload);
 
                 Token = token;

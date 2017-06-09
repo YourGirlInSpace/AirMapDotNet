@@ -68,7 +68,7 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
             geom.GeometryObject = (GeometryObject)
                 (
                     from t in Utilities.GetTypesWithAttribute<GeometryTypeAttribute>()
-                    let objType = t.GetCustomAttribute<GeometryTypeAttribute>(true)
+                    let objType = t.GetTypeInfo().GetCustomAttribute<GeometryTypeAttribute>(true)
                     // There should only be one instance of this
                     where objType.ObjectType == geom.GeometryType
                     select coordinatesToken.ToObject(t)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace AirMapDotNet.Services
 
             Href<Status> statusLink = new Href<Status>(new Uri(AirMap_Status_ByPoint));
 
-            NameValueCollection parms = new NameValueCollection
+            Dictionary<string, string> parms = new Dictionary<string, string>
             {
                 ["latitude"] = latlon.Latitude.ToString(CultureInfo.InvariantCulture),
                 ["longitude"] = latlon.Longitude.ToString(CultureInfo.InvariantCulture),
@@ -74,7 +75,7 @@ namespace AirMapDotNet.Services
                 statusLink = new Href<Status>(new Uri(AirMap_Status_ByPolygon));
             else throw new AirMapException("The only accepted geometries are LineString and Polygon!");
 
-            NameValueCollection parms = new NameValueCollection
+            Dictionary<string, string> parms = new Dictionary<string, string>
             {
                 ["geom"] = JsonConvert.SerializeObject(geom),
                 ["weather"] = weather ? "true" : "false"

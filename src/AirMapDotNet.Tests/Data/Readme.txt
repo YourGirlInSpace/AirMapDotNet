@@ -1,0 +1,1 @@
+﻿This folder contains mock return information for several aspects of the AirMap API.

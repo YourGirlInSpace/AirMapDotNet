@@ -246,3 +246,5 @@ ModelManifest.xml
 
 # Debug/sensitive data
 AirMapDotNet.Explorables/DebugData.resx
+AirMapDotNet.Explorables/airmap.config.json
+AirMapDotNet.Tests/airmap.config.json

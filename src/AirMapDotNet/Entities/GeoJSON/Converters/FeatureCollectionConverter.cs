@@ -59,8 +59,8 @@ namespace AirMapDotNet.Entities.GeoJSON.Converters
                 FeatureCollectionType = typeObj.Value<string>()
             };
 
-
-            geomObj.ToObject<Feature[]>().ToList().ForEach(x => featureCollection.Features.Add(x));
+            foreach (Feature x in geomObj.ToObject<Feature[]>())
+                featureCollection.Features.Add(x);
             
             return featureCollection;
         }
