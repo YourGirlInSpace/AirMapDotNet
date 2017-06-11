@@ -3,11 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using AirMapDotNet.Authentication;
 using AirMapDotNet.Entities.PilotAPI;
-using System.Dynamic;
 using AirMapDotNet.Entities.AircraftAPI;
 using System.Collections.Generic;
-using System.Linq;
 using AirMapDotNet.Entities.FlightAPI;
+using AirMapDotNet.Traffic;
 
 namespace AirMapDotNet.Explorables
 {
@@ -58,10 +57,10 @@ namespace AirMapDotNet.Explorables
 
                 var flt = await airMap.CreateFlight(fcp);*/
 
-                //string flightID = "flight|xEywlJkioDZxpGFD9Mx97T0qbl3K";
+                string flightID = "flight|eedovmDCY48yEZtlXPdJwfeayNK5";
 
-                //TrafficAPI traf = TrafficAPI.FromInstance(airMap);
-                //bool ok = await traf.Connect(flightID);
+                TrafficAPI traf = TrafficAPIFactory.Create(airMap, flightID);
+                bool ok = await traf.Connect();
             }
             catch (AirMapException ex)
             {

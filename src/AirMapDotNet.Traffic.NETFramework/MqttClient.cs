@@ -31,7 +31,7 @@ namespace AirMapDotNet.Traffic
 
             MqttClientOptions opts = new MqttClientOptions
             {
-                ClientId = Guid.NewGuid().ToString(),
+                ClientId = airMap.AuthenticationToken.Audience,
 
                 UserName = flightId,
                 Password = airMap.AuthenticationToken.Token,
@@ -41,7 +41,11 @@ namespace AirMapDotNet.Traffic
 
                 CleanSession = true,
                 KeepAlivePeriod = TimeSpan.FromSeconds(15),
-                DefaultCommunicationTimeout = TimeSpan.FromSeconds(2)
+                DefaultCommunicationTimeout = TimeSpan.FromSeconds(2),
+                
+                //TlsOptions = {
+                //    UseTls = true
+                //}
             };
 
             _client = new MqttClientFactory().CreateMqttClient(opts);

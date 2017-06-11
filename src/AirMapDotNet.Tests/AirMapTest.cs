@@ -50,14 +50,14 @@ namespace AirMapDotNet.Tests
             return $"{header_b64}.{payload_b64}.{signature_b64}";
         }
 
-        private AuthenticationToken GenerateAuthToken()
+        private static AuthenticationToken GenerateAuthToken()
         {
             string jwt = ConstructJWT(DateTime.UtcNow - TimeSpan.FromMinutes(5), TimeSpan.FromHours(4));
 
             return new AuthenticationToken(jwt);
         }
         
-        private AirMap InitializeAirMap()
+        private static AirMap InitializeAirMap()
         {
             Assert.IsTrue(File.Exists("airmap.config.json"), "ERROR: airmap.config.json missing!");
 
@@ -66,13 +66,15 @@ namespace AirMapDotNet.Tests
 
             AuthenticationToken token = GenerateAuthToken();
 
-            return new AirMap(config, token)
+            AirMap am = new AirMap(config, token)
             {
                 Requestor = new MockRequestor()
             };
+
+            return am;
         }
 
-        private bool DateTimesEqual(DateTime a, DateTime b)
+        private static bool DateTimesEqual(DateTime a, DateTime b)
             => Math.Abs(Math.Floor((a - EPOCH).TotalSeconds) - Math.Floor((b - EPOCH).TotalSeconds)) < TOLERANCE;
 
         #region Aircraft API

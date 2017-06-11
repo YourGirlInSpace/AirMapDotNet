@@ -5,6 +5,10 @@
     <RootNamespace>AirMapDotNet.Telemetry</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+
   <ItemGroup>
     <ProjectReference Include="..\AirMapDotNet.Telemetry\AirMapDotNet.Telemetry.csproj" />
   </ItemGroup>

@@ -3,21 +3,57 @@
   <metadata>
     <id>AirMapDotNet</id>
     <version>1.0.4</version>
-    <authors>Zazzmatazz</authors>
-    <owners>Zazzmatazz</owners>
+    <authors>Patrick Mathis [Zazzmatazz]</authors>
+    <owners>Patrick Mathis [Zazzmatazz]</owners>
     <licenseUrl>https://github.com/Zazzmatazz/AirMapDotNet/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Zazzmatazz/AirMapDotNet</projectUrl>
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/NuGet_project_logo.svg/1200px-NuGet_project_logo.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
     <description>A .NET SDK for the AirMap API.</description>
-    <releaseNotes>Release 1.0.3.2</releaseNotes>
+    <releaseNotes>
+      Refactored entire solution to work with multiple CPU architectures and .NET frameworks.  Hurray!
+    </releaseNotes>
+    
     <copyright>Copyright (c) Zazzmatazz 2017</copyright>
     <tags>dotnet airmap drone api sdk</tags>
+    
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.2" />
-      <dependency id="Auth0.Core" version="3.6.0" />
-      <dependency id="Auth0.AuthenticationApi" version="3.6.0" />
-      <dependency id="Auth0.ManagementApi" version="3.6.0" />
+      <dependency id="Auth0" version="3.6.0" />
+      <dependency id="System.IO.FileSystem" version="3.6.0" />
+      <dependency id="System.IO.FileSystem.Primitives" version="3.6.0" />
+      <dependency id="System.Net.Http" version="3.6.0" />
     </dependencies>
   </metadata>
+
+  <files>
+    <!-- .NET Framework 4.6 ANY CPU -->
+    <file src=".\AirMapDotNet.Telemetry.NetFramework\bin\Release\AirMapDotNet.Telemetry.dll" target="lib\net46" />
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\Release\AirMapDotNet.Traffic.dll" target="lib\net46" />
+    <file src=".\AirMapDotNet.Telemetry\bin\Release\netstandard1.3\AirMapDotNet.Telemetry.dll" target="lib\net46" />
+    <file src=".\AirMapDotNet.Traffic\bin\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46" />
+    <file src=".\AirMapDotNet\bin\Release\netstandard1.3\AirMapDotNet.dll" target="lib\net46" />
+
+    <!-- .NET Framework 4.6 X86 -->
+    <file src=".\AirMapDotNet.Telemetry.NetFramework\bin\x86\Release\AirMapDotNet.Telemetry.dll" target="lib\net46-x86" />
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\x86\Release\AirMapDotNet.Traffic.dll" target="lib\net46-x86" />
+    <file src=".\AirMapDotNet.Telemetry\bin\x86\Release\netstandard1.3\AirMapDotNet.Telemetry.dll" target="lib\net46-x86" />
+    <file src=".\AirMapDotNet.Traffic\bin\x86\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46-x86" />
+    <file src=".\AirMapDotNet\bin\x86\Release\netstandard1.3\AirMapDotNet.dll" target="lib\net46-x86" />
+
+    <!-- .NET Framework 4.6 X64 -->
+    <file src=".\AirMapDotNet.Telemetry.NetFramework\bin\x64\Release\AirMapDotNet.Telemetry.dll" target="lib\net46-x64" />
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\x64\Release\AirMapDotNet.Traffic.dll" target="lib\net46-x64" />
+    <file src=".\AirMapDotNet.Telemetry\bin\x64\Release\netstandard1.3\AirMapDotNet.Telemetry.dll" target="lib\net46-x64" />
+    <file src=".\AirMapDotNet.Traffic\bin\x64\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46-x64" />
+    <file src=".\AirMapDotNet\bin\x64\Release\netstandard1.3\AirMapDotNet.dll" target="lib\net46-x64" />
+
+    <!-- .NET Core 1.1 X64 -->
+    <file src=".\AirMapDotNet.Telemetry.NetCore\bin\Release\netcoreapp1.1\AirMapDotNet.Telemetry.dll" target="lib\netcoreapp1.1" />
+    <file src=".\AirMapDotNet.Traffic.NetCore\bin\Release\netcoreapp1.1\AirMapDotNet.Traffic.dll" target="lib\netcoreapp1.1" />
+    <file src=".\AirMapDotNet.Telemetry\bin\Release\netstandard1.3\AirMapDotNet.Telemetry.dll" target="lib\netcoreapp1.1" />
+    <file src=".\AirMapDotNet.Traffic\bin\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\netcoreapp1.1" />
+    <file src=".\AirMapDotNet\bin\Release\netstandard1.3\AirMapDotNet.dll" target="lib\netcoreapp1.1" />
+  </files>
 </package>

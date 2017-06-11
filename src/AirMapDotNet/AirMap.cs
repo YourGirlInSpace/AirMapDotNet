@@ -29,8 +29,8 @@ namespace AirMapDotNet
         /// <summary>
         /// The <see cref="Requestor"/> used to interact with the AirMap API.
         /// </summary>
-        public Requestor Requestor { get; set; }
-        
+        public Requestor Requestor { get; set; } = new HTTPRequestor();
+
         /// <summary>
         /// The authentication token used by this session.
         /// </summary>
