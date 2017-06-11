@@ -16,7 +16,8 @@
     <RepositoryUrl>https://github.com/Zazzmatazz/AirMapDotNet</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>dotnet airmap drone api sdk telemetry</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PostBuildEvent>nuget pack "$(SolutionDir)AirMapDotNet.Telemetry.dll.nuspec" -OutputDirectory "$(SolutionDir)NuPack"</PostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <AssemblyVersion>1.0.4</AssemblyVersion>
     <FileVersion>1.0.4</FileVersion>
     <PackageTags>dotnet airmap drone api sdk</PackageTags>
@@ -16,6 +16,7 @@
     <Version>1.0.4</Version>
     <Company>Zazzmatazz</Company>
     <Authors>Zazzmatazz</Authors>
+    <PostBuildEvent>nuget pack "$(SolutionDir)AirMapDotNet.dll.nuspec" -OutputDirectory "$(SolutionDir)NuPack"</PostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />

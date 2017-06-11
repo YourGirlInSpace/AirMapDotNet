@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AirMapDotNet.Traffic</id>
+    <version>1.0.4</version>
+    <authors>Patrick Mathis [Zazzmatazz]</authors>
+    <owners>Patrick Mathis [Zazzmatazz]</owners>
+    <licenseUrl>https://github.com/Zazzmatazz/AirMapDotNet/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Zazzmatazz/AirMapDotNet</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Zazzmatazz/AirMapDotNet/develop/media/airmapdotnet64.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
+    <description>A .NET SDK for the AirMap API.</description>
+    <releaseNotes>
+      Refactored entire solution to work with multiple CPU architectures and .NET frameworks.  Hurray!
+    </releaseNotes>
+    
+    <copyright>Copyright (c) Zazzmatazz 2017</copyright>
+    <tags>dotnet airmap drone api sdk mqtt</tags>
+    
+    <dependencies>
+      <dependency id="AirMapDotNet" version="1.0.4" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <!-- .NET Framework 4.6 ANY CPU -->
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\Release\AirMapDotNet.Traffic.dll" target="lib\net46" />
+    <file src=".\AirMapDotNet.Traffic\bin\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46" />
+
+    <!-- .NET Framework 4.6 X86 -->
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\x86\Release\AirMapDotNet.Traffic.dll" target="lib\net46-x86" />
+    <file src=".\AirMapDotNet.Traffic\bin\x86\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46-x86" />
+
+    <!-- .NET Framework 4.6 X64 -->
+    <file src=".\AirMapDotNet.Traffic.NetFramework\bin\x64\Release\AirMapDotNet.Traffic.dll" target="lib\net46-x64" />
+    <file src=".\AirMapDotNet.Traffic\bin\x64\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\net46-x64" />
+
+    <!-- .NET Core 1.1 X64 -->
+    <file src=".\AirMapDotNet.Traffic.NetCore\bin\Release\netcoreapp1.1\AirMapDotNet.Traffic.dll" target="lib\netcoreapp1.1" />
+    <file src=".\AirMapDotNet.Traffic\bin\Release\netstandard1.3\AirMapDotNet.Traffic.dll" target="lib\netcoreapp1.1" />
+  </files>
+</package>

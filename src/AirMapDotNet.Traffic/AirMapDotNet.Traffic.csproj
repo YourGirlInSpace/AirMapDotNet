@@ -16,7 +16,9 @@
     <RepositoryUrl>https://github.com/Zazzmatazz/AirMapDotNet</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>dotnet airmap drone api sdk</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PreBuildEvent></PreBuildEvent>
+    <PostBuildEvent>nuget pack "$(SolutionDir)AirMapDotNet.Traffic.dll.nuspec" -OutputDirectory "$(SolutionDir)NuPack"</PostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
