@@ -7,7 +7,7 @@
     <owners>Patrick Mathis [Zazzmatazz]</owners>
     <licenseUrl>https://github.com/Zazzmatazz/AirMapDotNet/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Zazzmatazz/AirMapDotNet</projectUrl>
-    <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/NuGet_project_logo.svg/1200px-NuGet_project_logo.svg.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/Zazzmatazz/AirMapDotNet/develop/media/airmapdotnet64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     
     <description>A .NET SDK for the AirMap API.</description>
@@ -21,9 +21,9 @@
     <dependencies>
       <dependency id="Newtonsoft.Json" version="10.0.2" />
       <dependency id="Auth0" version="3.6.0" />
-      <dependency id="System.IO.FileSystem" version="3.6.0" />
-      <dependency id="System.IO.FileSystem.Primitives" version="3.6.0" />
-      <dependency id="System.Net.Http" version="3.6.0" />
+      <dependency id="System.IO.FileSystem" version="4.3.0" />
+      <dependency id="System.IO.FileSystem.Primitives" version="4.3.0" />
+      <dependency id="System.Net.Http" version="4.3.2" />
     </dependencies>
   </metadata>
 
